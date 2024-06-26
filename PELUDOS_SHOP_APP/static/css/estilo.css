@@ -21,6 +21,13 @@
     margin-top: 33px;
   }
   
+
+  /* .color1 {color: #060610;}
+   .color2 {color: #292e40;}
+   .color3 {color: #595b76;}
+   .color4 {color: #8e8aba;}
+   .color5 {color: #cdbae5;} */
+
   /* COLOR DEL background DE LA BARRA PRINCIPAL */
   #barra_principal{
     background-color: #133F57;
@@ -36,43 +43,6 @@
     font-family: "Oswald";
   }
   
-  .plato-del-dia {
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-    text-align: center; 
-    background: #366985;
-    color: aliceblue;
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  
-  .imagen-plato-dia img{
-    width: 43%;
-    border-radius: 50px;
-  }
-  
-  .plato-del-dia button{
-    border-radius: 20px;
-    padding: 5px 10px;
-    background: #4698c4;
-    border: none;
-  }
-  
-  .plato{
-    margin-left: 25%;
-  }
-  
-  
-  .plato-del-dia button a{
-    text-decoration: none;
-    color: aliceblue;
-  }
-  
-  .plato-del-dia button:hover{
-    background: #62adf9;
-    transition: ease-in-out .3s;
-  }
   /*Imagen de la parte superior de las paginas*/
   .imagen-top img{
     margin-top: 15px;
