@@ -35,12 +35,10 @@ def inicio(request):
     platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
 
     user_profile = None
-    empresas = []
 
     if request.user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=request.user)
-            empresas = user_profile.empresa.all()
         except UserProfile.DoesNotExist:
             user_profile = None
 
@@ -48,7 +46,6 @@ def inicio(request):
         'perfil': perfil,
         'platos': platos,
         'user_profile': user_profile,
-        'empresas': empresas,
     }
 
     return render(request, 'public/inicio.html', context)
@@ -126,12 +123,10 @@ def carro(request):
     platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
 
     user_profile = None
-    empresas = []
 
     if request.user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=request.user)
-            empresas = user_profile.empresa.all()
         except UserProfile.DoesNotExist:
             user_profile = None
 
@@ -139,7 +134,7 @@ def carro(request):
         'perfil': perfil,
         'platos': platos,
         'user_profile': user_profile,
-        'empresas': empresas,
+
     }
     return render(request, "public/carrito.html",context)
 
@@ -245,7 +240,8 @@ def pago(request):
                         tipo_despacho=despacho,
                         direccion_entrega=direccion,
                         fecha_compra=timezone.now(),
-                        usuario=user_profile
+                        usuario=user_profile,
+                        metodo_pago=metodo_pago  # Guardar el método de pago
                     )
                     
                     # Actualizar el stock del producto
@@ -269,12 +265,10 @@ def pago(request):
     perfil = request.session.get('perfil')
     platos = ProductoProveedor.objects.filter(stock__gt=0, disponibilidad=True)
     user_profile = None
-    empresas = []
 
     if request.user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=request.user)
-            empresas = user_profile.empresa.all()
         except UserProfile.DoesNotExist:
             user_profile = None
 
@@ -282,7 +276,6 @@ def pago(request):
         'perfil': perfil,
         'platos': platos,
         'user_profile': user_profile,
-        'empresas': empresas,
     }
         
     return render(request, 'public/pago.html', context)
@@ -295,12 +288,10 @@ def confirmacion(request):
     platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
 
     user_profile = None
-    empresas = []
 
     if request.user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=request.user)
-            empresas = user_profile.empresa.all()
         except UserProfile.DoesNotExist:
             user_profile = None
 
@@ -308,7 +299,6 @@ def confirmacion(request):
         'perfil': perfil,
         'platos': platos,
         'user_profile': user_profile,
-        'empresas': empresas,
     }
 
     return render(request, 'public/confirmacion.html',context )
@@ -338,12 +328,10 @@ def menu(request):
     platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
 
     user_profile = None
-    empresas = []
 
     if request.user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=request.user)
-            empresas = user_profile.empresa.all()
         except UserProfile.DoesNotExist:
             user_profile = None
 
@@ -351,7 +339,6 @@ def menu(request):
         'perfil': perfil,
         'platos': platos,
         'user_profile': user_profile,
-        'empresas': empresas,
     }
 
     return render(request, 'menu.html', context)
@@ -388,12 +375,10 @@ def nosotros(request):
     platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
 
     user_profile = None
-    empresas = []
 
     if request.user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=request.user)
-            empresas = user_profile.empresa.all()
         except UserProfile.DoesNotExist:
             user_profile = None
 
@@ -401,7 +386,6 @@ def nosotros(request):
         'perfil': perfil,
         'platos': platos,
         'user_profile': user_profile,
-        'empresas': empresas,
     }
     return render(request, 'nosotros.html', context)
 
@@ -430,12 +414,10 @@ def preguntasFrecuentes(request):
     platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
 
     user_profile = None
-    empresas = []
 
     if request.user.is_authenticated:
         try:
             user_profile = UserProfile.objects.get(user=request.user)
-            empresas = user_profile.empresa.all()
         except UserProfile.DoesNotExist:
             user_profile = None
 
@@ -443,7 +425,6 @@ def preguntasFrecuentes(request):
         'perfil': perfil,
         'platos': platos,
         'user_profile': user_profile,
-        'empresas': empresas,
     }
     return render(request, 'preguntasFrecuentes.html', context)
 

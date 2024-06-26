@@ -51,12 +51,14 @@ class DetalleCompra(models.Model):
     cantidad = models.IntegerField()
     precio_total = models.DecimalField(max_digits=10, decimal_places=2)
     tipo_despacho = models.CharField(max_length=50)
-    direccion_entrega = models.CharField(max_length=255, blank=True, null=True)  # Nuevo campo para la dirección de entrega
+    direccion_entrega = models.CharField(max_length=255, blank=True, null=True)
     fecha_compra = models.DateTimeField()
     usuario = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    metodo_pago = models.CharField(max_length=50)  # Nuevo campo para el método de pago
 
     def __str__(self):
         return f"{self.usuario} || Producto: {self.producto.nombre_producto} || Cantidad: {self.cantidad}"
+
 #agregaro desde rama proveedores
 
 
