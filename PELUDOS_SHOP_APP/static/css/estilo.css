@@ -23,7 +23,7 @@
   
   /* COLOR DEL background DE LA BARRA PRINCIPAL */
   #barra_principal{
-    background-color: #133F57;
+    background-color: #3c1357;
     padding-bottom: 25px;
   }
   
@@ -41,7 +41,7 @@
     align-items: center; 
     justify-content: center; 
     text-align: center; 
-    background: #366985;
+    background: #6d3685;
     color: aliceblue;
     padding-top: 20px;
     padding-bottom: 20px;

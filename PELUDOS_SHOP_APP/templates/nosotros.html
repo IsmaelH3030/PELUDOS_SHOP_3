@@ -16,11 +16,11 @@
         <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
           <!-- si voy a registro y aprieto el logo no puedo volver a inicio
           si lo saco y dejo "" no devuelve a inicio -->
-          <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo.png' %}" alt="..." ></a>
+          <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo peludos shop.png'%}" alt="..." ></a>
         </div>
   
         <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-          <p class="ver-menu">SANTIAGO ALIMENTOS</p>
+          <p class="ver-menu">PELUDOS SHOP</p>
         </div>
   
           <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
@@ -41,7 +41,7 @@
                 </button>
               </a> -->
   
-              <div class="modal fade" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="carritoModalLabel" aria-hidden="true">
+              <!-- <div class="modal fade" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="carritoModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -62,7 +62,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         <!-- BARRA NAVEGACION -->
@@ -78,7 +78,7 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}"><img src="{% static 'img/icono2.png'%}" width="30px">INICIO</a>
                   </li>
                   <li class="nav-item item_arriba">
-                    <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">MENÚ</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">PRODUCTOS</a>
                   </li>
                 </ul>
               </div>
@@ -93,6 +93,7 @@
 <div class="container cont-about-us" style="background-image: url(img/fondoAboutUs.png);">
     <h2 id="titulo" style="text-align: center;">SOBRE NOSOTROS</h2>
 </div>
+<br>
 
 <div class="container">
   <div class="row">
@@ -101,18 +102,15 @@
           <hr>
           <br>
           <h1 style="font-weight: bold;">Nuestra historia</h1>
-          <h6 style="line-height: 30px; text-shadow: 2px 10px 7px #8e8aba;">Hace diez años, en el corazón de Santiago, Don Guillermo fundó "El Comilón" con una visión clara: ofrecer comidas caseras, frescas y sabrosas, inspiradas en las recetas tradicionales de su abuela.
-            Con el deseo de brindar una alternativa a la comida rápida industrial, Don Ricardo abrió este acogedor restaurante, convirtiéndolo rápidamente en un favorito entre los trabajadores de las empresas cercanas. El compromiso con ingredientes de alta calidad y el esmero en cada plato hicieron que "El Comilón" se destacara por su auténtica cocina casera.            
-            Para satisfacer la creciente demanda, incorporamos el servicio de entrega a domicilio, permitiendo que nuestros clientes disfruten de sus comidas favoritas sin salir de sus oficinas. A lo largo de los años, hemos mantenido nuestra esencia, adaptándonos a los cambios y desafíos del mercado.
-            Hoy, "El Comilón" sigue siendo un símbolo de tradición y buena comida en Santiago, comprometido con la calidad y el servicio que nos caracteriza desde el primer día. ¡Gracias por ser parte de nuestra historia! </h2>
+          <h6 style="line-height: 30px; text-shadow: 2px 10px 7px #8e8aba;">Un grupo de amigas apasionadas por los animales dio vida a nuestra tienda de accesorios para mascotas en 2020. Inicialmente, comenzamos modestamente en las redes sociales, ofreciendo productos hechos a mano con amor y dedicación, como bandanas, correas e identificaciones. Nuestro compromiso con una causa noble llevó al éxito de nuestro emprendimiento. Al asociarnos con la ONG "Ayuda a un Peludo", destinamos parte de nuestras ganancias para brindar atención médica, alimento y refugio a animales rescatados. Cada venta representa una contribución significativa para nuestros amigos peludos necesitados. Con el tiempo, hemos crecido y ahora contamos con una plataforma web que nos permite llegar a más clientes y promover nuestros productos de manera eficiente. Sin embargo, más allá de las ventas, nuestra principal motivación es marcar la diferencia en la vida de los animales abandonados y promover la adopción responsable.</h2>
         </div>
 
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-          <img class="img-about-us " style="margin-left: 100px;" src="{% static 'img/restaurante.png' %}">
+          <img class="img-about-us " style="margin-left: 100px;" src="{% static 'img/fundacion2.jpg' %}">
         </div>                                                       
     
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <img class="img-about-us" src="{% static 'img/comidas_para_nosotros.png' %}">
+            <img class="img-about-us" src="{% static 'img/fundacion3.jpg' %}">
         </div>   
             
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
@@ -120,19 +118,15 @@
           <br>
           <h1 style="font-weight: bold; text-align: right;">Nuestra misión</h1>
           <h6 style="line-height: 30px; text-shadow: 2px 10px 7px #8e8aba">
-            En "El Comilón", nuestra misión es brindar a nuestros clientes una experiencia gastronómica única, ofreciendo comidas caseras de alta calidad, 
-            preparadas con ingredientes frescos y tradicionales. Nos dedicamos a satisfacer las necesidades de nuestros clientes, 
-            ya sea en nuestro acogedor restaurante o a través de nuestro eficiente servicio de entrega a domicilio, siempre con un compromiso 
-            inquebrantable con la autenticidad, el sabor y la satisfacción del cliente. Queremos ser el lugar donde cada comida se sienta como en casa, 
-            promoviendo la alimentación saludable y el bienestar de nuestra comunidad.
+            EEn nuestra tienda de accesorios para mascotas, tenemos una misión clara: ofrecer productos de calidad y al mismo tiempo, apoyar a la ONG "Ayuda a un Peludo" en su labor de rescate, rehabilitación y adopción de animales abandonados. Nos apasiona la idea de que cada compra realizada en nuestra tienda contribuya a darle una segunda oportunidad a un perro o gato sin hogar. Queremos ser parte de la solución al problema del abandono animal y crear conciencia sobre la importancia de la tenencia responsable de mascotas. Además de nuestros productos, nos esforzamos por promover los valores de compasión, respeto y amor hacia todos los animales. Creemos que cada ser vivo merece ser tratado con dignidad y cariño, y trabajamos incansablemente para construir una comunidad más sensible y comprometida con el bienestar animal.
           </h6>
           <br>
         </div>
         <br>
         <hr>
 
-        <!--VIDEO-->
-        <!-- <div class="col-12 col-sm-12 col-md-9 col-lg-6 col-xl-6">
+        <!-- VIDEO-->
+        <div class="col-12 col-sm-12 col-md-9 col-lg-6 col-xl-6">
 
           <div class="ratio ratio-16x9" >
             <h1 style="font-weight: bold; text-align: center;">NUESTRO LOCAL</h1>
@@ -147,14 +141,14 @@
           <div class="row g-0 bg-body-secondary position-relative">
             
             <div class="col-md-6 mb-md-0 p-md-4">
-              <img src="img/Fundacion-Esperanza animal.png" class="w-100" alt="...">
+              <img src="{% static 'img/Fundacion-Esperanza animal.png' %}" class="w-100" alt="...">
             </div>
             
             <div class="col-md-6 p-4 ps-md-0">
               <h5 class="mt-0">FUNDACION</h5>
               <p>Fundación Esperanza Animal es una organización sin fines de lucro que se forma con el objetivo de mejorar la calidad de vida de las mascotas abandonadas o nacidas en la calle y a la vez disminuir la sobrepoblación a través de la educación y concientizar sobre la temática de Tenencia Responsable en nuestro país.</p>
               <a href="https://www.esperanzaanimal.cl/" class="stretched-link">Ayuda sin adoptar</a>
-            </div> -->
+            </div>
             
           </div>
         </div>
