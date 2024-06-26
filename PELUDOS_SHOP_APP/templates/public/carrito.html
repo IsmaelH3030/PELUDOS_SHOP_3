@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/estilo-carro.css' %}">
+{% endblock %}
+
+{% block title%}Carrito{% endblock %}
+
+{% block content %} 
+    <!-- LOGO     BARRA DE BUSQUEDA      BARRA NAVEGACION-->
+    <div class="container-fluid" id="barra_principal">
+        <div class="row">
+          <!-- LOGO -->
+          <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <!-- si voy a registro y aprieto el logo no puedo volver a inicio
+            si lo saco y dejo "" no devuelve a inicio -->
+            <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo.png' %}" alt="..." ></a>
+          </div>
+    
+          <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <p class="ver-menu">SANTIAGO ALIMENTOS</p>
+          </div>
+    
+            <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+    
+            </div>
+          <!-- BARRA NAVEGACION -->
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary ">
+              <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item item_arriba">
+                      <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}"><img src="{% static 'img/icono2.png'%}" width="30px">INICIO</a>
+                    </li>
+                    <li class="nav-item item_arriba">
+                      <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">MENÚ</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+    </div> <!--container-fluid-->
+    
+    
+    <div class="container form_pago">
+      <br>
+      <br>
+      {% include 'public/descrip_carrito.html' %}
+
+    </div>
+
+    <div class="container form_carrito">
+      <br>
+      <hr>
+      <br>
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+
+      {% endblock %}

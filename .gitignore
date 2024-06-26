@@ -1,0 +1,24 @@
+# Archivos y carpetas generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de compilación y ejecutables
+*.exe
+*.dll
+*.class
+*.jar
+
+# Carpetas de dependencias y entornos virtuales
+/node_modules
+/venv
+/.venv
+
+# Archivos de configuración local
+.env
+.env.local
+.env.*.local
+
+# Archivos de registro y salida
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

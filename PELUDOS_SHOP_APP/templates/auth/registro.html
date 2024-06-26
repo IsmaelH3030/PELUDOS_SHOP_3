@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %} 
+  <link rel="stylesheet" href="{% static 'styles-reg.css' %}">
+{% endblock %}
+
+{% block title%}Registro | Alimentos Santiago®{% endblock %}
+
+{% block content %} 
+  <div class="container-fluid" id="barra_principal">
+    <div class="row">
+      <!-- LOGO -->
+      <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <!-- si voy a registro y aprieto el logo no puedo volver a inicio
+        si lo saco y dejo "" no devuelve a inicio -->
+        <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo.png' %}" alt="..." ></a>
+      </div>
+
+      <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <p class="ver-menu">SANTIAGO ALIMENTOS</p>
+      </div>
+
+      <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+
+        <div class="dropdown">
+          {% comment %} <!-- imagen usuario -->
+          <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-expanded="false"><a href="registro"><img src="{% static 'img/usuario.png' %}" width="40px"></a>
+          </button> {% endcomment %}
+          {% if perfil != 'admin' and perfil != 'cliente' %}
+            <a class="btn btn-primary" href="{% url 'iniciosesion' %}">Inicio Sesión</a>
+            <a class="btn btn-primary" href="{% url 'registro' %}">Registrarse</a>
+          {% else %}
+            <a name="" id="" class="btn btn-primary" href="#" role="button">{{ request.user.username }}</a>
+            <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar sesión</a>
+          {% endif %}
+          <!-- imagen carrito -->
+          <!-- <a href="#">
+            <button id="carrito1" type="button" class="btn" onclick="abrirCarrito()">
+              <img src="{% static 'img/carrito.png'%}" width="40px">
+              <span id="cantidadCarrito" class="badge bg-danger rounded-pill">0</span>
+            </button>
+          </a>
+
+          <div class="modal fade" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="carritoModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="carritoModalLabel">Carrito de Compras</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-12">
+                        <div id="carrito-contenido"></div>
+                        <div id="carrito-total"></div>
+                        <hr class="border border-danger border-2 opacity-50">
+                        <button type="button" class="btn btn-secondary btn-pagar" data-bs-dismiss="modal">PAGAR</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <!-- BARRA NAVEGACION -->
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary ">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item item_arriba">
+                  <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}"><img src="{% static 'img/icono2.png'%}" width="30px">INICIO</a>
+                </li>
+                <li class="nav-item item_arriba">
+                  <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">MENÚ</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div> <!--container-fluid-->
+  
+  <div class="container registro">
+    <div class="separador"></div>
+    <div class="texto-registro col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+      <h3>Registro</h3>
+    </div>
+    <div class="div-input col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+      <form  action="" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="Usuario" class="form-label">Usuario</label>
+          <input type="text" class="form-control input" id="InputUsuario" name="InputUsuario" placeholder="Ejemplo_123">
+          </div>
+        <div class="mb-3">
+          <label for="Email1" class="form-label">Correo</label>
+          <input type="email" class="form-control input" id="InputEmail1" name="InputEmail1" aria-describedby="emailHelp" placeholder="Ejemplo@gmail.com">
+        </div>
+        <div class="mb-3">
+          <label for="run" class="form-label">rut</label>
+          <input type="text" class="form-control input" id="run" name="run" placeholder="123456789">
+          <div id="helpblock" class="form-text">
+            Sin puntos y sin guión.
+            Si su rut termina con k, reemplace con 0.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="Password1" class="form-label">Contraseña</label>
+          <input type="password" class="form-control input" id="InputPassword1" name="InputPassword1" placeholder="Ejem123.90">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="Check1">
+          <label class="form-check-label" for="exampleCheck1">Acepta los términos y condiciones</label>
+        </div>
+        <center><button type="submit" class="btn btn-light" >Enviar</button></center>
+      </form>
+    </div>
+  </div>
+
+{% endblock %} 
