@@ -29,10 +29,10 @@
    .color5 {color: #cdbae5;} */
 
   /* COLOR DEL background DE LA BARRA PRINCIPAL */
-  #barra_principal{
+  /* #barra_principal{
     background-color: #133F57;
     padding-bottom: 25px;
-  }
+  } */
   
   .ver-menu p{
     display: flex;
