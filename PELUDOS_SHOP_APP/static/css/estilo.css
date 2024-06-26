@@ -21,13 +21,15 @@
     margin-top: 33px;
   }
   
-
-  /* .color1 {color: #060610;}
+    /* .color1 {color: #060610;}
    .color2 {color: #292e40;}
    .color3 {color: #595b76;}
+   .color5 {color: #666294;}
    .color4 {color: #8e8aba;}
-   .color5 {color: #cdbae5;} */
+   .color5 {color: #cdbae5;} 
+   .color5 {color: #ebdaff;} */
 
+   
   /* COLOR DEL background DE LA BARRA PRINCIPAL */
   #barra_principal{
     background-color: #8e8aba;
@@ -122,24 +124,16 @@
     height: 350px;
   }
   
-  
+
   /* LOS CIRCULOS PARA LAS FOTOS DE INICIO*/
   .img-circulo{
     border-radius: 100%;
-    border: 7px solid #133F57;
+    border: 7px solid #cdbae5;
     width: 150px;
     margin-top: 25%;
-    box-shadow: 0px 0px 10px 3px #62adf9;
-    margin-bottom: 25px;
+    box-shadow: 0px 0px 10px 3px #8e8aba;
+    margin-bottom: 25%;
     
-  }
-  /* CIRCULO PARA CADA APARTADO*/
-  .img-circulo-accesorio{
-    border-radius: 100%;
-    border: 7px solid #133F57;
-    width: 150px;
-    box-shadow: 0px 0px 10px 3px #62adf9;
-    margin-top: 35px;
   }
   
   /* centrar letras de la barra circulos */
@@ -178,11 +172,13 @@
     font-family: "Oswald";
     font-size: 20px;
   }
-  
+
+
+
   /* PARA PONER LOS BOTONES PURPURA */
   .btn-custom-purple {
-    background-color: #366985;
-    border-color: #195474;
+    background-color: #8e8aba;
+    border-color: #8e8aba;
     color: white;
     border-radius: 20px;
     width: 150px;
@@ -191,18 +187,36 @@
     }
    /* COLORES DE LOS PRECIOS */
   .btn-custom-purple:hover{
-    background-color: #bee0ff;
+    background-color: #cdbae5;
   }
   
-  .btn-primary{
-    background-color: #1f61bc;
+    /* .color1 {color: #060610;}
+   .color2 {color: #292e40;}
+   .color3 {color: #595b76;}
+   .color5 {color: #666294;}
+   .color4 {color: #8e8aba;}
+   .color5 {color: #cdbae5;} 
+   .color5 {color: #ebdaff;} */
+
+  .btn-primary {
+    background-color: #8e8aba;
+    border-color: #595b76;
     color: white;
     border-radius: 20px;
     width: 120px;
     height: 42px;
     padding-top: 7px;
-  }
-  
+    transition: background-color 0.3s, color 0.3s; /* Para una transición suave */
+    box-shadow: 0px 0px 10px 3px #666294;
+}
+
+.btn-primary:hover {
+    background-color: #cdbae5;
+    border-color: #595b76;
+
+}
+
+
   .btn-light{
     background-color: #8e8aba;
     color: white;
@@ -332,7 +346,7 @@
   
   .img-about-us{
     border-radius: 100%;
-    border: 7px solid #195474;
+    border: 7px solid #8e8aba;
     width: 80%;
     margin-top: 5%;
     box-shadow: 0px 0px 10px 3px #C6D4DC;
