@@ -21,6 +21,13 @@
     margin-top: 33px;
   }
   
+
+  /* .color1 {color: #060610;}
+   .color2 {color: #292e40;}
+   .color3 {color: #595b76;}
+   .color4 {color: #8e8aba;}
+   .color5 {color: #cdbae5;} */
+
   /* COLOR DEL background DE LA BARRA PRINCIPAL */
   #barra_principal{
     background-color: #3c1357;
@@ -36,6 +43,7 @@
     font-family: "Oswald";
   }
   
+
   .plato-del-dia {
     display: flex;
     align-items: center; 
@@ -73,6 +81,7 @@
     background: #62adf9;
     transition: ease-in-out .3s;
   }
+
   /*Imagen de la parte superior de las paginas*/
   .imagen-top img{
     margin-top: 15px;
@@ -204,18 +213,12 @@
     border: none;
     margin-top: 20px;
   }
-  /* .color1 {color: #62adf9;}
-     .color3 {color: #bee0ff;}
-     .color1 {color: #103548;}
-     .color1 {color: #133F57;}
-     .color1 {color: #195474;}
-     .color2 {color: #366985;}
-     .color3 {color: #537F97;}
-     .color4 {color: #6F94A8;}
-     .color5 {color: #8CAABA;}
-     .color5 {color: #A9BFCB;}
-     .color5 {color: #C6D4DC;}
-     .color5 {color: #E2EAEE;} */
+
+/* .color1 {color: #060610;}
+   .color2 {color: #292e40;}
+   .color3 {color: #595b76;}
+   .color4 {color: #8e8aba;}
+   .color5 {color: #cdbae5;} */
   
   
   .boton-morado{
@@ -336,18 +339,11 @@
   }
   
   
-  /* .color1 {color: #62adf9;}
-     .color3 {color: #bee0ff;}
-     .color1 {color: #103548;}
-     .color1 {color: #133F57;}
-     .color1 {color: #195474;}
-     .color2 {color: #366985;}
-     .color3 {color: #537F97;}
-     .color4 {color: #6F94A8;}
-     .color5 {color: #8CAABA;}
-     .color5 {color: #A9BFCB;}
-     .color5 {color: #C6D4DC;}
-     .color5 {color: #E2EAEE;} */
+ /* .color1 {color: #060610;}
+   .color2 {color: #292e40;}
+   .color3 {color: #595b76;}
+   .color4 {color: #8e8aba;}
+   .color5 {color: #cdbae5;} */
   
   .c-about-us{
     text-align: justify;
@@ -494,15 +490,8 @@
     width: 35px;
   }
   
-  /* .color1 {color: #62adf9;}
-     .color3 {color: #bee0ff;}
-     .color1 {color: #103548;}
-     .color1 {color: #133F57;}
-     .color1 {color: #195474;}
-     .color2 {color: #366985;}
-     .color3 {color: #537F97;}
-     .color4 {color: #6F94A8;}
-     .color5 {color: #8CAABA;}
-     .color5 {color: #A9BFCB;}
-     .color5 {color: #C6D4DC;}
-     .color5 {color: #E2EAEE;} */
+/* .color1 {color: #060610;}
+   .color2 {color: #292e40;}
+   .color3 {color: #595b76;}
+   .color4 {color: #8e8aba;}
+   .color5 {color: #cdbae5;} */
