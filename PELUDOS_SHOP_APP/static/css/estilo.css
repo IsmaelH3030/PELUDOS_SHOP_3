@@ -30,7 +30,7 @@
 
   /* COLOR DEL background DE LA BARRA PRINCIPAL */
   #barra_principal{
-    background-color: #133F57;
+    background-color: #8e8aba;
     padding-bottom: 25px;
   } */
   
@@ -254,7 +254,7 @@
   
   /*FOOTER*/
   .footer{
-    background-color: #133F57;
+    background-color: #8e8aba;
     color: azure;
     padding: 80px 50px 80px 50px;
     margin-top: 20px;
@@ -322,7 +322,7 @@
   .c-reservados{
     padding: 10px;
     text-align: center;
-    background-color: #103548;
+    background-color: #8e8aba;
     color: azure;
   }
   
