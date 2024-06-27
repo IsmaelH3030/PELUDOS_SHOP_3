@@ -1,0 +1,402 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %} 
+
+{% endblock %}
+
+{% block title%}Peludos Shop®{% endblock %}
+
+{% block content %} 
+<!-- LOGO     BARRA DE BUSQUEDA      BARRA NAVEGACION-->
+<div class="container-fluid" id="barra_principal">
+    <div class="row">
+      <!-- LOGO -->
+      <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo peludos shop.png'%}" alt="..." ></a>
+      </div>
+
+      <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <p class="ver-menu">PELUDOS SHOP</p>
+      </div>
+
+        <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+
+          <div class="dropdown">
+            {% if perfil != 'admin' and perfil != 'cliente' %}
+              <a class="btn btn-primary" href="{% url 'iniciosesion' %}">Inicio Sesión</a>
+              <a class="btn btn-primary" href="{% url 'registro' %}">Registrarse</a>
+            {% else %}
+              <!-- Button trigger modal -->
+                <button name="" id="" type="button" class="btn btn-primary" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  {{ request.user.username }}
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Mi cuenta</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <h3>Bienvenido {{ request.user.username }}</h3>
+                        <hr>
+                        <p><b>Correo electrónico:</b> {{ request.user.email }}</p>
+                        {% if user_profile %}
+                          <p><b>RUN :</b> {{ user_profile.run }}</p>
+                          <p><b>Usuario :</b> {{ user_profile.role }}</p>
+                        {% else %}
+                          <p>No se ha encontrado el perfil del usuario.</p>
+                        {% endif %}
+                    </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar sesión</a>
+            {% endif %}
+          </div>
+        </div>
+      <!-- BARRA NAVEGACION -->
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary ">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item item_arriba">
+                  <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">PRODUCTOS</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div> <!--container-fluid-->
+  <br>
+
+
+
+
+<!--CONTENIDO DE SUSCRIPCION-->
+
+
+      <div class="container">
+        <div class="row">
+            <div class="col">
+              <br><br>
+              <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{% static 'img/suscripcionmensual.jpg'%}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title"> $ 2.500</h5>
+                      <p class="card-text">¡Únete a nuestra suscripción mensual para ayudar a los perritos necesitados de nuestra fundación! Cada mes, tu generosa contribución nos permite brindar refugio, alimentos, atención médica y amor a perros abandonados y maltratados. Con tu apoyo continuo, podemos garantizar un futuro más brillante para estos fieles amigos peludos. ¡Juntos, podemos marcar la diferencia en las vidas de estos dulces compañeros de cuatro patas!</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{% static 'img/suscripciontrimestral.jpg'%}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">$ 13.000</h5>
+                      <p class="card-text">¡Únete a nuestra suscripción semestral y sé parte de la misión continua de ayudar a los perritos necesitados de nuestra fundación! Con tu compromiso a largo plazo, podemos hacer aún más por estos adorables compañeros de cuatro patas. Tu apoyo nos permite proporcionarles refugio seguro, cuidados médicos, alimentación adecuada y, lo más importante, el amor y la atención que merecen. Juntos, podemos asegurarnos de que ningún perrito se sienta solo o desamparado. ¡Haz una diferencia real en sus vidas al unirte a nosotros hoy!</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{% static 'img/suscripcionanual.jpg'%}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">$ 20.000</h5>
+                      <p class="card-text">¡Hazte miembro de nuestra suscripción anual y comprométete a largo plazo con la noble causa de ayudar a los perritos necesitados de nuestra fundación! Con tu generosidad sostenida a lo largo del año, podemos realizar un impacto aún mayor en la vida de estos fieles amigos peludos. Tu apoyo continuo nos permite ofrecerles un refugio seguro, atención médica de calidad, alimentación adecuada y, sobre todo, el amor y la compasión que tanto necesitan. Únete a nosotros en nuestra misión de garantizar que cada perrito reciba el cuidado y la atención que se merece. ¡Tu compromiso anual puede marcar la diferencia en sus vidas para siempre!</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br><br>
+
+
+
+              <form class="row g-3">
+                <div class="col-md-12">
+                  <label for="validationDefault01" class="form-label">Tipo de suscripcion</label>
+                  <select class="form-select" id="validationDefault01" required>
+                    <option selected disabled value="">...</option>
+                    <option>Mensual -- $2.500</option>
+                    <option>Standard (semestral) -- $13.000</option>
+                    <option>Anual -- $20.000</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationDefault02" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="validationDefault02" value="" required>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationDefault03" class="form-label">Apellido</label>
+                  <input type="text" class="form-control" id="validationDefault03" value="" required>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationDefaultUsername" class="form-label">Username</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                    <input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="validationDefault04" class="form-label">Ciudad</label>
+                  <select class="form-select" id="validationDefault04" required>
+                    <option selected disabled value="">...</option>
+                    <option>Angol
+                    </option>
+                    <option>Antofagasta
+                  </option>
+                    <option>Arica
+                  </option>
+                    <option>Calama
+                  </option>
+                    <option>Castro
+                  </option>
+                    <option>Cauquenes
+                  </option>
+                    <option>Chaitén
+                  </option>
+                    <option>Chañaral
+                  </option>
+                    <option>Chile Chico
+                  </option>
+                    <option>Chillán
+                  </option>
+                    <option>Cochrane
+                  </option>
+                    <option>Colina
+                  </option>
+                    <option>Concepción
+                  </option>
+                    <option>Copiapó
+                  </option>
+                    <option>Coquimbo
+                  </option>
+                    <option>Coyhaique
+                  </option>
+                    <option>Curicó
+                  </option>
+                    <option>Hanga Roa
+                  </option>
+                    <option>Illapel
+                  </option>
+                    <option>Iquique
+                  </option>
+                    <option>La Florida
+                  </option>
+                    <option>La Ligua
+                  </option>
+                    <option>La Serena
+                  </option>
+                    <option>La Unión
+                  </option>
+                    <option>Las Condes
+                  </option>
+                    <option>Lebu
+                  </option>
+                    <option>Linares
+                  </option>
+                    <option>Los Andes
+                  </option>
+                    <option>Los Ángeles
+                  </option>
+                    <option>Maipú
+                  </option>
+                    <option>Melipilla
+                  </option>
+                    <option>Osorno
+                  </option>
+                    <option>Ovalle
+                  </option>
+                    <option>Peñalolén
+                  </option>
+                    <option>Pichilemu
+                  </option>
+                    <option>Porvenir
+                  </option>
+                    <option>Pozo Almonte
+                  </option>
+                    <option>Puente Alto
+                  </option>
+                    <option>Puerto Aysén
+                  </option>
+                    <option>Puerto Montt
+                  </option>
+                    <option>Puerto Natales
+                  </option>
+                    <option>Puerto Williams
+                  </option>
+                    <option>Punta Arenas
+                  </option>
+                    <option>Putre
+                  </option>
+                    <option>Quillota
+                  </option>
+                    <option>Quilpué
+                  </option>
+                    <option>Rancagua
+                  </option>
+                    <option>San Antonio
+                  </option>
+                    <option>San Bernardo
+                  </option>
+                    <option>San Felipe
+                  </option>
+                    <option>San Fernando
+                  </option>
+                    <option>Santiago
+                  </option>
+                    <option>Talagante
+                  </option>
+                    <option>Talca
+                  </option>
+                    <option>Temuco
+                  </option>
+                    <option>Tocopilla
+                  </option>
+                    <option>Valdivia
+                  </option>
+                    <option>Vallenar
+                  </option>
+                    <option>Valparaíso
+                  </option>
+                    <option>Viña del Mar
+                  </option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationDefault05" class="form-label">Regiones</label>
+                  <select class="form-select" id="validationDefault05" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option>Región de Arica y Parinacota</option>
+                        <option>Región de Tarapacá</option>
+                        <option>Región de Antofagasta</option>
+                        <option>Región de Atacama</option>
+                        <option>Región de Coquimbo</option>
+                        <option>Región de Valparaíso</option>
+                        <option>Región del Libertador General Bernardo O'Higgins</option>
+                        <option>Región del Maule</option>
+                        <option>Región de Ñuble</option>
+                        <option>Región del Biobío</option>
+                        <option>Región de La Araucanía</option>
+                        <option>Región de Los Ríos</option>
+                        <option>Región de Los Lagos</option>
+                        <option>Región de Aisén del G. Carlos Ibáñez del Campo</option>
+                        <option>Región de Magallanes y de la Antártica Chilena</option>
+                        <option>Región Metropolitana de Santiago</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationDefault05" class="form-label">Tipo de tarjeta</label>
+                  <select class="form-select" id="validationDefault05" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option>Debito</option>
+                    <option>Credito</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationDefault06" class="form-label">Nombre del titular</label>
+                  <input type="text" class="form-control" id="validationDefault06" required>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationDefault07" class="form-label">Numero de tarjeta</label>
+                  <input type="number" class="form-control" id="validationDefault07" required>
+                </div>
+                <div class="col-md-2">
+                  <label for="validationDefault08" class="form-label">Fecha de expiracion</label>
+                  <select class="form-select" id="validationDefault08" required>
+                    <option selected disabled value="">Mes...</option>
+                    <option>01</option>
+                    <option>02</option>
+                    <option>03</option>
+                    <option>04</option>
+                    <option>05</option>
+                    <option>06</option>
+                    <option>07</option>
+                    <option>08</option>
+                    <option>09</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2">
+                  <label for="validationDefault09" class="form-label">Año</label>
+                  <select class="form-select" id="validationDefault09" required>
+                    <option selected disabled value="">Año 20...</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                    <option>31</option>
+                    <option>32</option>
+                    <option>33</option>
+                    <option>34</option>
+                    <option>35</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationDefault10" class="form-label">Codigo de seguridad</label>
+                  <input type="number" class="form-control" id="validationDefault10" required>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                    <label class="form-check-label" for="invalidCheck2">
+                      Aceptar términos y condiciones
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="col-4">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Terminos y condiciones
+                </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            Estos son los terminos y condiciones aceptalos ahoraaaa
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-primary btn-primary2" type="submit">Suscribirme</button>
+                </div>
+              </form>
+            </div>
+        </div>
+      </div>
+
+
+
+
+
+      {% endblock %}

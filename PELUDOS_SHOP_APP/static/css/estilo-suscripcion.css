@@ -54,9 +54,6 @@ form   .btn-custom-purple:hover{
 }
 
 
-
-
-
 .footer{
     background-color: #8e8aba;
     color: azure;
@@ -128,4 +125,8 @@ form   .btn-custom-purple:hover{
     text-align: center;
     background-color: #595b76;
     color: azure;
+  }
+
+  .modal button{
+    margin-left: 100px;
   }

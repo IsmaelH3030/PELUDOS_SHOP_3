@@ -13,6 +13,11 @@ from django.db import transaction
 
 # Create your views here.
 
+def suscripcion(request):
+    return render(request, 'suscripcion.html')
+
+
+
 def inicio(request):
     # Para que se muestren los platos que la empresa requeria de platos
 #    user = request.user
@@ -140,6 +145,8 @@ def carro(request):
 
 def descrip_carro(request):
     return render(request, 'public/descrip_carrito.html')
+
+
 
 def lista_productos(request):
     productos = ProductoProveedor.objects.all()  # Obtén todos los productos (ajusta la consulta según tu modelo)
@@ -307,27 +314,13 @@ def confirmacion(request):
 
 
 def menu(request):
-       # Para que se muestren los platos que la empresa requeria de platos
-#    user = request.user
     perfil = request.session.get('perfil')
-#     if user.is_authenticated:
-#         try:
-#             user_profile = UserProfile.objects.get(user=user)
-#             empresa = user_profile.empresa.first()  # Obtener la primera empresa asociada al perfil
-#         except UserProfile.DoesNotExist:
-#             user_profile = None
-#             empresa = None
-
-#         if empresa:
-#             platos = empresa.platos_disponibles.filter(disponibilidad=True)
-#         else:
-#             platos = PlatoProveedor.objects.filter(disponibilidad=True)
-#     else:
-#         platos = PlatoProveedor.objects.filter(disponibilidad=True)
-
-    platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
-
     user_profile = None
+
+    # Obtener productos filtrados por categoría
+    productos_gatos = ProductoProveedor.objects.filter(categoria='comida_gatos', stock__gt=0, disponibilidad=True)
+    productos_perros = ProductoProveedor.objects.filter(categoria='comida_perros', stock__gt=0, disponibilidad=True)
+    accesorios = ProductoProveedor.objects.filter(categoria='accesorios', stock__gt=0, disponibilidad=True)
 
     if request.user.is_authenticated:
         try:
@@ -337,7 +330,9 @@ def menu(request):
 
     context = {
         'perfil': perfil,
-        'platos': platos,
+        'productos_gatos': productos_gatos,
+        'productos_perros': productos_perros,
+        'accesorios': accesorios,
         'user_profile': user_profile,
     }
 
@@ -429,4 +424,100 @@ def preguntasFrecuentes(request):
     return render(request, 'preguntasFrecuentes.html', context)
 
 
+def crud(request):
+    productos = ProductoProveedor.objects.all()
+    context = {'productos': productos}
+    return render(request, 'productos/productos_list.html', context)
 
+def productosAdd(request):
+    if request.method != "POST":
+        proveedores = Proveedor.objects.all()
+        context = {'proveedores': proveedores}
+        return render(request, 'productos/productos_add.html', context)
+    else:
+        id = request.POST.get("id")
+        proveedor = request.POST.get("proveedor")
+        nombre_producto = request.POST.get("nombre_producto")
+        descripcion = request.POST.get("descripcion")
+        precio = request.POST.get("precio")
+        stock = request.POST.get("stock")
+        disponibilidad = request.POST.get("disponibilidad")
+        imagen = request.POST.get("imagen")
+        activo = "1"
+        
+        objProveedor = Proveedor.objects.get(id_proveedor=proveedor)
+        ProductoProveedor.objects.create(
+            id=id,
+            proveedor=objProveedor,
+            nombre_producto=nombre_producto,
+            descripcion=descripcion,
+            precio=precio,
+            stock=stock,
+            disponibilidad=disponibilidad,
+            imagen=imagen,
+            activo=activo
+        )
+        
+        context = {'mensaje': 'Datos grabados'}
+        return render(request, 'productos/productos_add.html', context)
+
+def productos_del(request, pk):
+    context = {}
+    try:
+        producto = ProductoProveedor.objects.get(id=pk)
+        producto.delete()
+        mensaje = "Ok. Datos eliminados"
+    except ProductoProveedor.DoesNotExist:
+        mensaje = "Error, id no existe."
+    
+    productos = ProductoProveedor.objects.all()
+    context = {'productos': productos, 'mensaje': mensaje}
+    return render(request, 'productos/productos_list.html', context)
+
+def productos_findEdit(request, pk):
+    try:
+        producto = ProductoProveedor.objects.get(id=pk)
+        proveedores = Proveedor.objects.all()
+        context = {'producto': producto, 'proveedores': proveedores}
+        return render(request, 'productos/productos_edit.html', context)
+    except ProductoProveedor.DoesNotExist:
+        context = {'mensaje': "Error, id no existe."}
+        return render(request, 'productos/productos_list.html', context)
+
+def productosUpdate(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        proveedor = request.POST.get("proveedor")
+        nombre_producto = request.POST.get("nombre_producto")
+        descripcion = request.POST.get("descripcion")
+        precio = request.POST.get("precio")
+        stock = request.POST.get("stock")
+        disponibilidad = request.POST.get("disponibilidad")
+        imagen = request.POST.get("imagen")
+        activo = "1"
+
+        objProveedor = Proveedor.objects.get(id_proveedor=proveedor)
+        producto = ProductoProveedor.objects.get(id=id)
+        producto.proveedor = objProveedor
+        producto.nombre_producto = nombre_producto
+        producto.descripcion = descripcion
+        producto.precio = precio
+        producto.stock = stock
+        producto.disponibilidad = disponibilidad
+        producto.imagen = imagen
+        producto.activo = activo
+        producto.save()
+        
+        proveedores = Proveedor.objects.all()
+        context = {'mensaje': "Datos actualizados", 'proveedores': proveedores, 'producto': producto}
+        return render(request, 'productos/productos_edit.html', context)
+    else:
+        productos = ProductoProveedor.objects.all()
+        context = {'productos': productos}
+        return render(request, 'productos/productos_list.html', context)
+    
+
+def productos_categoria(request):
+    productos_gatos = ProductoProveedor.objects.filter(categoria='comida_gatos')
+    context = {'productos_gatos': productos_gatos}
+    return render(request, 'productos/productos_categoria.html', context)

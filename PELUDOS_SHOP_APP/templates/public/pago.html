@@ -5,10 +5,10 @@
 {% block styles %} 
 {% endblock %}
 
-{% block title %}Alimentos Santiago{% endblock %}
+{% block title %}Peludos Shop{% endblock %}
 
 {% block content %} 
-    <!-- LOGO     BARRA DE BUSQUEDA      BARRA NAVEGACION-->
+    <!-- LOGO - BARRA NAVEGACION-->
     <div class="container-fluid" id="barra_principal">
         <div class="row">
           <!-- LOGO -->
@@ -17,7 +17,7 @@
           </div>
     
           <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <p class="ver-menu">SANTIAGO ALIMENTOS</p>
+            <p class="ver-menu">PELUDOS SHOP</p>
           </div>
     
           <div class="usuario col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
@@ -59,6 +59,7 @@
                 {% endif %}
               </div>
             </div>
+
           <!-- BARRA NAVEGACION -->
           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary">
@@ -69,7 +70,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                   <ul class="navbar-nav">
                     <li class="nav-item item_arriba">
-                      <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">MENÚ</a>
+                      <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">PRODUCTOS</a>
                     </li>
                   </ul>
                 </div>
@@ -90,6 +91,7 @@
           <div class="form-group">
               <label for="despacho">Tipo de Despacho</label>
               <select name="despacho" id="despacho" class="form-control">
+                  <option selected disabled value="">...</option>
                   <option value="retiro_tienda">Retiro en Tienda</option>
                   <option value="domicilio">Despacho a Domicilio</option>
               </select>
@@ -98,13 +100,14 @@
           <div id="direccion-domicilio" style="display: none;">
               <div class="form-group">
                   <label for="direccion">Dirección de entrega</label>
-                  <input type="text" name="direccion" id="direccion" class="form-control" required>
+                  <input type="text" name="direccion" id="direccion" class="form-control" >
               </div>
           </div>
           <br>
           <div class="form-group">
               <label for="metodo_pago">Método de Pago</label>
               <select name="metodo_pago" id="metodo_pago" class="form-control">
+                  <option selected disabled value="">...</option>
                   <option value="debito">Tarjeta Débito</option>
                   <option value="credito">Tarjeta Crédito</option>
               </select>
@@ -113,43 +116,43 @@
           <div id="datos-tarjeta-debito" style="display: none;">
               <div class="form-group">
                   <label for="nombre_titular_debito">Nombre del Titular</label>
-                  <input type="text" name="nombre_titular_debito" id="nombre_titular_debito" class="form-control" required>
+                  <input type="text" name="nombre_titular_debito" id="nombre_titular_debito" class="form-control">
               </div>
               <br>
               <div class="form-group">
                   <label for="numero_tarjeta_debito">Número de Tarjeta</label>
-                  <input type="text" name="numero_tarjeta_debito" id="numero_tarjeta_debito" class="form-control" required>
+                  <input type="text" name="numero_tarjeta_debito" id="numero_tarjeta_debito" class="form-control">
               </div>
               <br>
               <div class="form-group">
                   <label for="cvv_debito">CVV</label>
-                  <input type="text" name="cvv_debito" id="cvv_debito" class="form-control" required>
+                  <input type="text" name="cvv_debito" id="cvv_debito" class="form-control">
               </div>
               <br>
               <div class="form-group">
                   <label for="fecha_vencimiento_debito">Fecha de Vencimiento</label>
-                  <input type="text" name="fecha_vencimiento_debito" id="fecha_vencimiento_debito" class="form-control" placeholder="MM/AA" required>
+                  <input type="text" name="fecha_vencimiento_debito" id="fecha_vencimiento_debito" class="form-control" placeholder="MM/AA">
               </div>
           </div>
           <div id="datos-tarjeta-credito" style="display: none;">
               <div class="form-group">
                   <label for="nombre_titular_credito">Nombre del Titular</label>
-                  <input type="text" name="nombre_titular_credito" id="nombre_titular_credito" class="form-control" required>
+                  <input type="text" name="nombre_titular_credito" id="nombre_titular_credito" class="form-control">
               </div>
               <br>
               <div class="form-group">
                   <label for="numero_tarjeta_credito">Número de Tarjeta</label>
-                  <input type="text" name="numero_tarjeta_credito" id="numero_tarjeta_credito" class="form-control" required>
+                  <input type="text" name="numero_tarjeta_credito" id="numero_tarjeta_credito" class="form-control">
               </div>
               <br>
               <div class="form-group">
                   <label for="cvv_credito">CVV</label>
-                  <input type="text" name="cvv_credito" id="cvv_credito" class="form-control" required>
+                  <input type="text" name="cvv_credito" id="cvv_credito" class="form-control">
               </div>
               <br>
               <div class="form-group">
                   <label for="fecha_vencimiento_credito">Fecha de Vencimiento</label>
-                  <input type="text" name="fecha_vencimiento_credito" id="fecha_vencimiento_credito" class="form-control" placeholder="MM/AA" required>
+                  <input type="text" name="fecha_vencimiento_credito" id="fecha_vencimiento_credito" class="form-control" placeholder="MM/AA">
               </div>
           </div>
           <br>

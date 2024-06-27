@@ -9,13 +9,13 @@
 {% block title%} PELUDOS SHOP {% endblock %}
 
 {% block content %} 
-    <!-- LOGO     BARRA DE BUSQUEDA      BARRA NAVEGACION-->
+    <!-- LOGO  -  BARRA NAVEGACION-->
     <div class="container-fluid" id="barra_principal">
       <div class="row">
+
         <!-- LOGO -->
         <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-          <!-- si voy a registro y aprieto el logo no puedo volver a inicio
-          si lo saco y dejo "" no devuelve a inicio -->
+
           <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo peludos shop.png'%}" alt="..." ></a>
         </div>
   
@@ -34,7 +34,8 @@
                   <button name="" id="" type="button" class="btn btn-primary" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     {{ request.user.username }}
                   </button>
-                  <!-- Modal -->
+
+                  <!-- MODAL PARA LOS DATOS DEL USUARIO -->
                   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -48,11 +49,7 @@
                           <p><b>Correo electrónico:</b> {{ request.user.email }}</p>
                           {% if user_profile %}
                             <p><b>RUN :</b> {{ user_profile.run }}</p>
-                            <p><b>Saldo : $</b> {{ user_profile.saldo }}</p>
                             <p><b>Usuario :</b> {{ user_profile.role }}</p>
-                            <p><b>Empresa : </b>{% for empresa in empresas %}
-                                                  {{ empresa.nombre }}
-                                                {% endfor %}</p>
                           {% else %}
                             <p>No se ha encontrado el perfil del usuario.</p>
                           {% endif %}
@@ -65,38 +62,10 @@
                   </div>
                 <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar sesión</a>
               {% endif %}
-              <!-- imagen carrito -->
-              <!-- <a href="">
-                <button id="carrito1" type="button" class="btn" onclick="abrirCarrito()">
-                  <img src="{% static 'img/carrito.png'%}" width="40px">
-                  <span id="cantidadCarrito" class="badge bg-danger rounded-pill">0</span>
-                </button>
-              </a>
-  
-              <div class="modal fade" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="carritoModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="carritoModalLabel">Carrito de Compras</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="container">
-                        <div class="row">
-                          <div class="col-12">
-                            <div id="carrito-contenido"></div>
-                            <div id="carrito-total"></div>
-                            <hr class="border border-danger border-2 opacity-50">
-                            <button type="button" class="btn btn-secondary btn-pagar" data-bs-dismiss="modal">PAGAR</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
             </div>
           </div>
+
+
         <!-- BARRA NAVEGACION -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary ">
@@ -106,9 +75,6 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                  <!-- <li class="nav-item item_arriba">
-                    <a class="nav-link active" aria-current="page" href="#OFERTAS"><img src="{% static 'img/icono2.png'%}" width="30px">OFERTAS</a>
-                  </li> -->
                   <li class="nav-item item_arriba">
                     <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}"><img src="{% static 'img/icono2.png'%}" width="30px">INCIO</a>
                   </li>
@@ -120,31 +86,8 @@
       </div>
     </div> <!--container-fluid-->
 
-<!-- 
-  <div class="container" id="CCO">
-    <div class="row"> -->
-      
-      <!-- CIRCULOS  --> 
-      <!-- <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
-        <img class="img-circulo" src="{% static 'img/Chile.png'%}" alt="" width="200px">
-        <p class="p-img-circulo">CHILE</p>
-      </div>
-      <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
-          <img class="img-circulo" src="{% static 'img/China.png'%}" alt="" width="200px">
-          <p class="p-img-circulo">CHINA</p>
-      </div>
-      <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
-          <img class="img-circulo" src="{% static 'img/Peru.png'%}"alt="" width="200px">
-          <p class="p-img-circulo">PERU</p>
-      </div>
-      <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 text-center">
-          <img class="img-circulo" src="{% static 'img/Italia.png'%}" alt="" width="200px">
-          <p class="p-img-circulo">ITALIA</p>
-      </div>
-      <hr> -->
     
       <!--   PREGUNTAS FRECUENTES -->
-
   <div class="container cont-about-us">
     <h2 id="titulo"style="text-align: center;">PREGUNTAS FRECUENTES</h2>
   </div>

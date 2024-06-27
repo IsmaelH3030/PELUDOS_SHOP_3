@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Menu | Alimentos Santiago®{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'img/Logo peludos shop.png'%}">
+{% endblock %}
+{% block content %}
+
+  <!-- LOGO    BARRA NAVEGACION-->
+  <div class="container-fluid" id="barra_principal">
+    
+    <div class="row">
+      <!-- LOGO -->
+      <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <!-- si voy a registro y aprieto el logo no puedo volver a inicio
+        si lo saco y dejo "" no devuelve a inicio -->
+        <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo peludos shop.png'%}" alt="..." ></a>
+      </div>
+
+      <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <p class="ver-menu">PELUDOS SHOP</p>
+      </div>
+
+        <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+
+          <div class="dropdown">
+            {% comment %} <!-- imagen usuario -->
+            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-expanded="false"><a href="registro"><img src="{% static 'img/usuario.png' %}" width="40px"></a>
+            </button> {% endcomment %}
+            {% if perfil != 'admin' and perfil != 'cliente' %}
+              <a class="btn btn-primary" href="{% url 'iniciosesion' %}">Inicio Sesión</a>
+              <a class="btn btn-primary" href="{% url 'registro' %}">Registrarse</a>
+            {% else %}
+              <!-- Button trigger modal -->
+              <button name="" id="" type="button" class="btn btn-primary" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                {{ request.user.username }}
+              </button>
+              <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Mi cuenta</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <h3>Bienvenido {{ request.user.username }}</h3>
+                      <hr>
+                      <p><b>Correo electrónico:</b> {{ request.user.email }}</p>
+                      {% if user_profile %}
+                        <p><b>RUN :</b> {{ user_profile.run }}</p>
+                        <p><b>Saldo :</b> {{ user_profile.saldo }}</p>
+                        <p><b>Usuario :</b> {{ user_profile.role }}</p>
+                        <p><b>Empresa : </b>{% for empresa in empresas %}
+                                              {{ empresa.nombre }}
+                                            {% endfor %}</p>
+                      {% else %}
+                        <p>No se ha encontrado el perfil del usuario.</p>
+                      {% endif %}
+                  </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar sesión</a>
+            {% endif %}
+
+
+          </div>
+        </div>
+      <!-- BARRA NAVEGACION -->
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary ">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item item_arriba">
+                  <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}"><img src="{% static 'img/icono2.png'%}" width="30px">INICIO</a>
+                </li>
+                <li class="nav-item item_arriba">
+                  <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">PRODUCTOS</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div> <!--container-fluid-->
+
+<div class="container">
+  <div class="row">
+    <div style="text-align: center;">
+      <h2>Formulario CRUD para Productos</h2>
+      <form action="{% url 'productosAdd' %}" method="POST">
+          {% csrf_token %}
+          <pre>Id: <input type="text" name="id"></pre>
+          <pre>Proveedor: 
+              <select name="proveedor">
+                  {% for proveedor in proveedores %}
+                      <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+                  {% endfor %}
+              </select>
+          </pre>
+          <pre>Nombre producto: <input type="text" name="nombre_producto"></pre>
+          <pre>Descripcion: <input type="text" name="descripcion"></pre>
+          <pre>Precio: <input type="text" name="precio"></pre>
+          <pre>Stock: <input type="text" name="stock"></pre>
+          <pre>Disponibilidad: <input type="text" name="disponibilidad"></pre>
+          <pre>Imagen: <input type="text" name="imagen"></pre>
+      
+          <input type="submit" name="opcion" value="Agregar">
+      </form><br><br>
+      <a href="{% url 'crud' %}">Volver</a>
+      <div id="idMensajes">
+          {% if mensaje %}
+              {{ mensaje }}
+          {% endif %}
+      </div>
+  </div>
+  </div>
+</div>
+  
+{% endblock %}
