@@ -182,109 +182,111 @@ def limpiar_carrito(request):
 @transaction.atomic
 def pago(request):
     carrito = request.session.get('carrito', {})
-    
+
     if not carrito:  # Verificar si el carrito está vacío
         return render(request, 'public/carrito.html', {'error': 'No existen productos en el carrito.'})
-    
-    if request.method == "POST":
-        # Procesar la selección de despacho y método de pago
-        despacho = request.POST.get('despacho', '')
-        metodo_pago = request.POST.get('metodo_pago', '')
-        
-        # Validar dirección si se selecciona despacho a domicilio
-        if despacho == 'domicilio':
-            direccion = request.POST.get('direccion', '')
-            if not direccion:
-                messages.error(request, 'Debes ingresar una dirección para el despacho a domicilio.')
-                return redirect('pago')
-        else:
-            direccion = None
-        
-        # Verificar si el usuario está autenticado
-        if not request.user.is_authenticated:
-            messages.warning(request, 'Debes iniciar sesión para realizar una compra.')
-            return redirect('iniciosesion')  # Redirigir a la página de inicio de sesión
-        
-        # Obtener el UserProfile asociado al usuario actual
-        try:
-            user_profile = request.user.userprofile
-        except UserProfile.DoesNotExist:
-            messages.error(request, 'Debes iniciar sesión antes de comprar.')
-            return redirect('iniciosesion')  # O redirigir a la página de inicio si UserProfile no existe
-        
-        try:
-            with transaction.atomic():
-                # Validar si se paga con saldo
-                if metodo_pago == 'saldo':
-                    # Calcular el total de la compra
-                    total_compra = sum(value['acumulado'] for key, value in carrito.items())
-                    
-                    # Verificar si el saldo es suficiente
-                    if user_profile.saldo < total_compra:
-                        messages.error(request, 'Saldo insuficiente para realizar la compra.')
-                        return redirect('carrito')  # O redirigir a la página del carrito
-                    
-                    # Actualizar el saldo del usuario
-                    user_profile.saldo -= total_compra
-                    user_profile.save()
-                
-                # Guardar los detalles de la compra y actualizar el stock
-                for key, value in carrito.items():
-                    producto = ProductoProveedor.objects.get(id=value['producto_id'])
-                    cantidad_comprada = value['cantidad']
-                    precio_total = value['acumulado']
-                    
-                    # Validar si la cantidad deseada supera el stock disponible
-                    if cantidad_comprada > producto.stock:
-                        messages.error(request, f'El producto "{producto.nombre_producto}" no tiene suficiente stock disponible.')
-                        return redirect('carrito')  # O redirigir a la página del carrito
-                    
-                    # Crear el detalle de la compra
-                    DetalleCompra.objects.create(
-                        producto=producto,
-                        cantidad=cantidad_comprada,
-                        precio_total=precio_total,
-                        tipo_despacho=despacho,
-                        direccion_entrega=direccion,
-                        fecha_compra=timezone.now(),
-                        usuario=user_profile,
-                        metodo_pago=metodo_pago  # Guardar el método de pago
-                    )
-                    
-                    # Actualizar el stock del producto
-                    producto.stock -= cantidad_comprada
-                    producto.save()
-                
-                # Limpiar el carrito después de la compra
-                del request.session['carrito']
-                request.session.modified = True
-                
-                return redirect('confirmacion')
-        
-        except ProductoProveedor.DoesNotExist:
-            messages.error(request, 'Uno o más productos no existen en nuestro inventario.')
-            return redirect('carrito')  # O redirigir a la página del carrito
-        
-        except Exception as e:
-            messages.error(request, f'Ocurrió un error al procesar tu compra: {str(e)}')
-            return redirect('carrito')  # O redirigir a la página del carrito
 
+    if not request.user.is_authenticated:
+        messages.warning(request, 'Debes iniciar sesión para realizar una compra.')
+        return redirect('iniciosesion')  # Redirigir a la página de inicio de sesión
+
+    # Obtener perfil y productos para mostrar en el formulario de pago
     perfil = request.session.get('perfil')
     platos = ProductoProveedor.objects.filter(stock__gt=0, disponibilidad=True)
-    user_profile = None
-
-    if request.user.is_authenticated:
-        try:
-            user_profile = UserProfile.objects.get(user=request.user)
-        except UserProfile.DoesNotExist:
-            user_profile = None
+    user_profile = UserProfile.objects.get(user=request.user) if request.user.is_authenticated else None
 
     context = {
         'perfil': perfil,
         'platos': platos,
         'user_profile': user_profile,
     }
-        
+
+    if request.method == "POST":
+        # Procesar la selección de método de pago
+        metodo_pago = request.POST.get('metodo_pago', '')
+
+        # Validar que se haya seleccionado método de pago
+        if not metodo_pago:
+            messages.error(request, 'Debes ingresar el método de pago.')
+            return render(request, 'public/pago.html', context)
+
+        # Validar campos de tarjeta de débito si se selecciona este método de pago
+        if metodo_pago == 'debito':
+            nombre_titular_debito = request.POST.get('nombre_titular_debito', '')
+            numero_tarjeta_debito = request.POST.get('numero_tarjeta_debito', '')
+            cvv_debito = request.POST.get('cvv_debito', '')
+            fecha_vencimiento_debito = request.POST.get('fecha_vencimiento_debito', '')
+
+            if not (nombre_titular_debito and numero_tarjeta_debito and cvv_debito and fecha_vencimiento_debito):
+                messages.error(request, 'Por favor completa todos los campos de la tarjeta de débito.')
+                return render(request, 'public/pago.html', context)
+
+            # Agregar los datos de tarjeta de débito al contexto para mantenerlos en el formulario
+            context['nombre_titular_debito'] = nombre_titular_debito
+            context['numero_tarjeta_debito'] = numero_tarjeta_debito
+            context['cvv_debito'] = cvv_debito
+            context['fecha_vencimiento_debito'] = fecha_vencimiento_debito
+
+        # Validar campos de tarjeta de crédito si se selecciona este método de pago
+        elif metodo_pago == 'credito':
+            nombre_titular_credito = request.POST.get('nombre_titular_credito', '')
+            numero_tarjeta_credito = request.POST.get('numero_tarjeta_credito', '')
+            cvv_credito = request.POST.get('cvv_credito', '')
+            fecha_vencimiento_credito = request.POST.get('fecha_vencimiento_credito', '')
+
+            if not (nombre_titular_credito and numero_tarjeta_credito and cvv_credito and fecha_vencimiento_credito):
+                messages.error(request, 'Por favor completa todos los campos de la tarjeta de crédito.')
+                return render(request, 'public/pago.html', context)
+
+            # Agregar los datos de tarjeta de crédito al contexto para mantenerlos en el formulario
+            context['nombre_titular_credito'] = nombre_titular_credito
+            context['numero_tarjeta_credito'] = numero_tarjeta_credito
+            context['cvv_credito'] = cvv_credito
+            context['fecha_vencimiento_credito'] = fecha_vencimiento_credito
+
+        # Guardar los detalles de la compra y actualizar el stock
+        try:
+            with transaction.atomic():
+                for key, value in carrito.items():
+                    producto = ProductoProveedor.objects.get(id=value['producto_id'])
+                    cantidad_comprada = value['cantidad']
+                    precio_total = value['acumulado']
+
+                    # Validar si la cantidad deseada supera el stock disponible
+                    if cantidad_comprada > producto.stock:
+                        messages.error(request, f'El producto "{producto.nombre_producto}" no tiene suficiente stock disponible.')
+                        return redirect('carrito')  # O redirigir a la página del carrito
+
+                    # Crear el detalle de la compra
+                    DetalleCompra.objects.create(
+                        producto=producto,
+                        cantidad=cantidad_comprada,
+                        precio_total=precio_total,
+                        tipo_despacho='retiro_tienda',  # Se establece como retiro en tienda
+                        direccion_entrega=None,  # No se usa despacho a domicilio
+                        fecha_compra=timezone.now(),
+                        usuario=request.user.userprofile if request.user.is_authenticated else None,
+                        metodo_pago=metodo_pago  # Guardar el método de pago
+                    )
+
+                    # Actualizar el stock del producto
+                    producto.stock -= cantidad_comprada
+                    producto.save()
+
+                # Limpiar el carrito después de la compra
+                del request.session['carrito']
+                request.session.modified = True
+
+                return redirect('confirmacion')
+
+        except ProductoProveedor.DoesNotExist:
+            messages.error(request, 'Uno o más productos no existen en nuestro inventario.')
+            return redirect('carrito')  # O redirigir a la página del carrito
+
+        except Exception as e:
+            messages.error(request, f'Ocurrió un error al procesar tu compra: {str(e)}')
+            return redirect('carrito')  # O redirigir a la página del carrito
+
     return render(request, 'public/pago.html', context)
 
 
@@ -432,22 +434,27 @@ def crud(request):
 def productosAdd(request):
     if request.method != "POST":
         proveedores = Proveedor.objects.all()
-        context = {'proveedores': proveedores}
+        categorias = ProductoProveedor.CATEGORIAS  # Obtén las opciones de categoría desde el modelo
+        context = {
+            'proveedores': proveedores,
+            'categorias': categorias  # Pasa las categorías al contexto
+        }
         return render(request, 'productos/productos_add.html', context)
     else:
-        id = request.POST.get("id")
-        proveedor = request.POST.get("proveedor")
+        # Procesar el formulario POST para agregar el producto
+        proveedor_id = request.POST.get("proveedor")
         nombre_producto = request.POST.get("nombre_producto")
         descripcion = request.POST.get("descripcion")
         precio = request.POST.get("precio")
         stock = request.POST.get("stock")
         disponibilidad = request.POST.get("disponibilidad")
-        imagen = request.POST.get("imagen")
-        activo = "1"
-        
-        objProveedor = Proveedor.objects.get(id_proveedor=proveedor)
+        imagen = request.FILES.get("imagen")  # Usar request.FILES para obtener archivos
+        categoria = request.POST.get("categoria")
+
+        objProveedor = Proveedor.objects.get(id=proveedor_id)  # Corrige el campo id_proveedor a id
+
+        # Crear el nuevo objeto ProductoProveedor con los datos recibidos
         ProductoProveedor.objects.create(
-            id=id,
             proveedor=objProveedor,
             nombre_producto=nombre_producto,
             descripcion=descripcion,
@@ -455,9 +462,10 @@ def productosAdd(request):
             stock=stock,
             disponibilidad=disponibilidad,
             imagen=imagen,
-            activo=activo
+            categoria=categoria
         )
-        
+
+        # Preparar el contexto con un mensaje de éxito
         context = {'mensaje': 'Datos grabados'}
         return render(request, 'productos/productos_add.html', context)
 
@@ -469,7 +477,7 @@ def productos_del(request, pk):
         mensaje = "Ok. Datos eliminados"
     except ProductoProveedor.DoesNotExist:
         mensaje = "Error, id no existe."
-    
+
     productos = ProductoProveedor.objects.all()
     context = {'productos': productos, 'mensaje': mensaje}
     return render(request, 'productos/productos_list.html', context)
@@ -478,36 +486,47 @@ def productos_findEdit(request, pk):
     try:
         producto = ProductoProveedor.objects.get(id=pk)
         proveedores = Proveedor.objects.all()
-        context = {'producto': producto, 'proveedores': proveedores}
+        categorias = ProductoProveedor.CATEGORIAS  # Obtener las opciones de categoría desde el modelo
+
+        context = {
+            'producto': producto,
+            'proveedores': proveedores,
+            'categorias': categorias  # Pasar las categorías al contexto
+        }
         return render(request, 'productos/productos_edit.html', context)
     except ProductoProveedor.DoesNotExist:
         context = {'mensaje': "Error, id no existe."}
         return render(request, 'productos/productos_list.html', context)
 
+
 def productosUpdate(request):
     if request.method == "POST":
-        id = request.POST.get("id")
-        proveedor = request.POST.get("proveedor")
+        id_producto = request.POST.get("id")
+        proveedor_id = request.POST.get("proveedor")
         nombre_producto = request.POST.get("nombre_producto")
         descripcion = request.POST.get("descripcion")
         precio = request.POST.get("precio")
         stock = request.POST.get("stock")
         disponibilidad = request.POST.get("disponibilidad")
-        imagen = request.POST.get("imagen")
-        activo = "1"
+        categoria = request.POST.get("categoria")
+        imagen = request.FILES.get("imagen")  # Usar request.FILES para obtener archivos
 
-        objProveedor = Proveedor.objects.get(id_proveedor=proveedor)
-        producto = ProductoProveedor.objects.get(id=id)
+        objProveedor = Proveedor.objects.get(id=proveedor_id)
+
+        producto = ProductoProveedor.objects.get(id=id_producto)
         producto.proveedor = objProveedor
         producto.nombre_producto = nombre_producto
         producto.descripcion = descripcion
         producto.precio = precio
         producto.stock = stock
         producto.disponibilidad = disponibilidad
-        producto.imagen = imagen
-        producto.activo = activo
+        producto.categoria = categoria
+        if imagen:
+            producto.imagen = imagen  # Actualizar la imagen solo si se proporcionó una nueva
         producto.save()
-        
+        producto.categoria = categoria
+        producto.save()
+
         proveedores = Proveedor.objects.all()
         context = {'mensaje': "Datos actualizados", 'proveedores': proveedores, 'producto': producto}
         return render(request, 'productos/productos_edit.html', context)
@@ -515,9 +534,11 @@ def productosUpdate(request):
         productos = ProductoProveedor.objects.all()
         context = {'productos': productos}
         return render(request, 'productos/productos_list.html', context)
-    
+
 
 def productos_categoria(request):
     productos_gatos = ProductoProveedor.objects.filter(categoria='comida_gatos')
     context = {'productos_gatos': productos_gatos}
     return render(request, 'productos/productos_categoria.html', context)
+
+

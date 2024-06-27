@@ -83,63 +83,73 @@
   <br>
 
 
+  
   <!--EDITAR LOS PRODUCTOS --> 
 <div class="container">
   <div class="row">
-    <h1>Editar Datos de los Productos</h1>
-    <br><br><br>
-    <button type="button">
-        <a href="{% url 'productosAdd' %}">Agregar</a>
-    </button>
-    <hr>
-    <br><br>
-    <div id="idMensajes">
-        {% if mensaje %}
-            {{ mensaje }}
-        {% endif %}
-    </div>
-    <table>
-        {% if productos %}
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Proveedor</th>
-                    <th>Nombre producto</th>
-                    <th>Descripcion</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Disponibilidad</th>
-                    <th>Imagen</th>
-                    <th>Eliminar</th>
-                    <th>Modificar</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for x in productos %}
-                <tr>
-                    <td>{{ x.id }}</td>
-                    <td>{{ x.proveedor }}</td>
-                    <td>{{ x.nombre_producto }}</td>
-                    <td>{{ x.descripcion }}</td>
-                    <td>{{ x.precio }}</td>
-                    <td>{{ x.stock }}</td>
-                    <td>{{ x.disponibilidad }}</td>
-                    <td>{{ x.imagen }}</td>
-                    <td><a href="{% url 'productos_del' pk=x.id %}">Eliminar</a></td>
-                    <td><a href="{% url 'productos_findEdit' pk=x.id %}">Modificar</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        {% else %}
-            <tr>
-                <td colspan="10">No hay productos disponibles.</td>
-            </tr>
-        {% endif %}
-    </table>
-  </div>
-</div>  
+    
+        <div class="apartado-agregar-titulo  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <h1>Editar Datos de los Productos</h1>
+        </div>
+        
+            <diV class="apartado-agregar-tabla  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div id="idMensajes">
+                    {% if mensaje %}
+                        {{ mensaje }}
+                    {% endif %}
+                </div>
+
+                <table class="apartado-aliminar-editar">
+                    {% if productos %}
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Proveedor</th>
+                                <th>Nombre producto</th>
+                                <th>Descripcion</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Disponibilidad</th>
+                                <th>Imagen</th>
+                                <th>Eliminar</th>
+                                <th>Modificar</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            {% for x in productos %}
+                            <tr>
+                                <td>{{ x.id }}</td>
+                                <td>{{ x.proveedor }}</td>
+                                <td>{{ x.nombre_producto }}</td>
+                                <td>{{ x.descripcion }}</td>
+                                <td>{{ x.precio }}</td>
+                                <td>{{ x.stock }}</td>
+                                <td>{{ x.disponibilidad }}</td>
+                                <td>{{ x.imagen }}</td>
+                                
+                                <td><a id="eliminar"  href="{% url 'productos_del' pk=x.id %}">Eliminar</a></td>
+                                <td><a id="modificar" href="{% url 'productos_findEdit' pk=x.id %}">Modificar</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    {% else %}
+                        <tr>
+                            <td colspan="10">No hay productos disponibles.</td>
+                        </tr>
+                    {% endif %}
+                </table>
+
+            </diV>
+            <div class="apartado-agregar-boton  col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+              <button type="button"><a href="{% url 'productosAdd' %}">Agregar</a></button>
+              </div>
+        </div>  
+      </div>
+    
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script>
     $(document).ready(function(){
         $("#idMensajes").delay(2000).fadeOut("slow");

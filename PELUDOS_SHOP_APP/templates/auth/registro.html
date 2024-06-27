@@ -73,27 +73,26 @@
         {% csrf_token %}
         <div class="mb-3">
           <label for="Usuario" class="form-label">Usuario</label>
-          <input type="text" class="form-control input" id="InputUsuario" name="InputUsuario" placeholder="Ejemplo_123" >
-          </div>
-        <div class="mb-3">
-          <label for="Email1" class="form-label">Correo</label>
-          <input type="email" class="form-control input" id="InputEmail1" name="InputEmail1" aria-describedby="emailHelp" placeholder="Ejemplo@gmail.com" >
+          <input type="text" class="form-control input" id="InputUsuario" name="InputUsuario" placeholder="Ejemplo_123" required>
         </div>
         <div class="mb-3">
-          <label for="run" class="form-label">rut</label>
-          <input type="text" class="form-control input" id="run" name="run" placeholder="123456789" >
+          <label for="Email1" class="form-label">Correo</label>
+          <input type="email" class="form-control input" id="InputEmail1" name="InputEmail1" aria-describedby="emailHelp" placeholder="Ejemplo@gmail.com" required>
+        </div>
+        <div class="mb-3">
+          <label for="run" class="form-label">RUT</label>
+          <input type="text" class="form-control input" id="run" name="run" placeholder="123456789" required>
           <div id="helpblock" class="form-text">
-            Sin puntos y sin guión.
-            Si su rut termina con k, reemplace con 0.
+            Sin puntos y sin guión. Si su RUT termina con k, reemplace con 0.
           </div>
         </div>
         <div class="mb-3">
           <label for="Password1" class="form-label">Contraseña</label>
-          <input type="password" class="form-control input" id="InputPassword1" name="InputPassword1" placeholder="Ejem123.90" >
+          <input type="password" class="form-control input" id="InputPassword1" name="InputPassword1" placeholder="Ejem123.90" required>
         </div>
         <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="Check1" >
-          <label class="form-check-label" for="exampleCheck1">Acepta los términos y condiciones</label>
+          <input type="checkbox" class="form-check-input" id="Check1" required>
+          <label class="form-check-label" for="Check1">Acepta los términos y condiciones</label>
         </div>
         <center><button type="submit" class="btn btn-light" >Enviar</button></center>
       </form>

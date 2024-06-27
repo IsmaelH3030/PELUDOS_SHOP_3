@@ -52,11 +52,7 @@
                       <p><b>Correo electrónico:</b> {{ request.user.email }}</p>
                       {% if user_profile %}
                         <p><b>RUN :</b> {{ user_profile.run }}</p>
-                        <p><b>Saldo :</b> {{ user_profile.saldo }}</p>
                         <p><b>Usuario :</b> {{ user_profile.role }}</p>
-                        <p><b>Empresa : </b>{% for empresa in empresas %}
-                                              {{ empresa.nombre }}
-                                            {% endfor %}</p>
                       {% else %}
                         <p>No se ha encontrado el perfil del usuario.</p>
                       {% endif %}
@@ -96,37 +92,60 @@
     </div>
   </div> <!--container-fluid-->
 
-<div class="container">
-  <div class="row">
-    <div style="text-align: center;">
-      <h2>Formulario CRUD para Productos</h2>
-      <form action="{% url 'productosAdd' %}" method="POST">
-          {% csrf_token %}
-          <pre>Id: <input type="text" name="id"></pre>
-          <pre>Proveedor: 
-              <select name="proveedor">
-                  {% for proveedor in proveedores %}
-                      <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
-                  {% endfor %}
-              </select>
-          </pre>
-          <pre>Nombre producto: <input type="text" name="nombre_producto"></pre>
-          <pre>Descripcion: <input type="text" name="descripcion"></pre>
-          <pre>Precio: <input type="text" name="precio"></pre>
-          <pre>Stock: <input type="text" name="stock"></pre>
-          <pre>Disponibilidad: <input type="text" name="disponibilidad"></pre>
-          <pre>Imagen: <input type="text" name="imagen"></pre>
-      
-          <input type="submit" name="opcion" value="Agregar">
-      </form><br><br>
-      <a href="{% url 'crud' %}">Volver</a>
-      <div id="idMensajes">
-          {% if mensaje %}
-              {{ mensaje }}
-          {% endif %}
-      </div>
-  </div>
-  </div>
+
+
+
+  
+  <div class="container">
+    <div class="row">
+        <div style="text-align: center;">
+            <h2>Formulario CRUD para Productos</h2>
+            <form action="{% url 'productosAdd' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="">
+                <pre>Proveedor: 
+                    <select name="proveedor">
+                        {% for proveedor in proveedores %}
+                            <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </pre>
+                <pre>Nombre producto: <input type="text" name="nombre_producto" required></pre>
+                <pre>Descripción: <textarea name="descripcion" rows="4" required></textarea></pre>
+                <pre>Precio: <input type="number" name="precio" required></pre>
+                <pre>Stock: <input type="number" name="stock" required></pre>
+                <pre>Disponibilidad: 
+                    <select name="disponibilidad">
+                        <option value="True">Disponible</option>
+                        <option value="False">No disponible</option>
+                    </select>
+                </pre>
+                <pre>Categoría: 
+                    <select name="categoria">
+                        {% for choice in categorias %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </pre>
+                <pre>Imagen: <input type="file" name="imagen"></pre>
+                <br>
+                <input type="submit" name="opcion" value="Agregar">
+            </form><br><br>
+            <a href="{% url 'crud' %}">Volver</a>
+            <div id="idMensajes">
+                {% if mensaje %}
+                    {{ mensaje }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
   
 {% endblock %}
+
+
+
+
+
+
+

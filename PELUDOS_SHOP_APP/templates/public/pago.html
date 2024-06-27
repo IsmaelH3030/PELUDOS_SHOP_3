@@ -93,16 +93,9 @@
               <select name="despacho" id="despacho" class="form-control">
                   <option selected disabled value="">...</option>
                   <option value="retiro_tienda">Retiro en Tienda</option>
-                  <option value="domicilio">Despacho a Domicilio</option>
               </select>
           </div>
           <br>
-          <div id="direccion-domicilio" style="display: none;">
-              <div class="form-group">
-                  <label for="direccion">Dirección de entrega</label>
-                  <input type="text" name="direccion" id="direccion" class="form-control" >
-              </div>
-          </div>
           <br>
           <div class="form-group">
               <label for="metodo_pago">Método de Pago</label>
@@ -163,16 +156,6 @@
     </div>
     
     <script>
-        // Mostrar campos de dirección si se selecciona "Despacho a domicilio"
-        document.getElementById('despacho').addEventListener('change', function() {
-            var option = this.value;
-            if (option === 'domicilio') {
-                document.getElementById('direccion-domicilio').style.display = 'block';
-            } else {
-                document.getElementById('direccion-domicilio').style.display = 'none';
-            }
-        });
-
         // Mostrar campos de tarjeta de débito o crédito según la opción seleccionada
         document.getElementById('metodo_pago').addEventListener('change', function() {
             var option = this.value;

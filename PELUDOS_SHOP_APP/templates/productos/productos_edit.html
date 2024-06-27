@@ -52,11 +52,8 @@
                       <p><b>Correo electrónico:</b> {{ request.user.email }}</p>
                       {% if user_profile %}
                         <p><b>RUN :</b> {{ user_profile.run }}</p>
-                        <p><b>Saldo :</b> {{ user_profile.saldo }}</p>
                         <p><b>Usuario :</b> {{ user_profile.role }}</p>
-                        <p><b>Empresa : </b>{% for empresa in empresas %}
-                                              {{ empresa.nombre }}
-                                            {% endfor %}</p>
+
                       {% else %}
                         <p>No se ha encontrado el perfil del usuario.</p>
                       {% endif %}
@@ -96,48 +93,89 @@
     </div>
   </div> <!--container-fluid-->
 
-<div class="container">
-  <div class="row">
-    <div style="text-align: center;">
-      {% if producto %}
-          <h2>Formulario actualizar datos</h2>
+  <div class="container">
+    <div class="row">
+      <div style="text-align: center;">
+        {% if producto %}
+            <h2>Formulario actualizar datos</h2>
   
-          <form action="{% url 'productosUpdate' %}" method="POST">
-              {% csrf_token %}
+            <form action="{% url 'productosUpdate' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
   
-              <pre>Id: <input type="text" name="id" value="{{producto.id}}"></pre>
-              <pre>Proveedor: <select name="proveedor">
-                  {% for proveedor in proveedores %}
-                      {% if proveedor.proveedor == producto.id_proveedor.proveedor %}
-                          <option value="{{proveedor.id_proveedor}}" selected>{{proveedor.proveedor}}</option>
-                      {% else %}
-                          <option value="{{proveedor.id_proveedor}}">{{proveedor.proveedor}}</option>
-                      {% endif %}
-                  {% endfor %}
-              </select></pre>
-              <pre>Nombre producto: <input type="text" name="nombre_producto" value="{{producto.nombre_producto}}"></pre>
-              <pre>Descripcion: <input type="text" name="descripcion" value="{{producto.descripcion}}"></pre>
-              <pre>Precio: <input type="text" name="precio" value="{{producto.precio}}"></pre>
-              <pre>Stock: <input type="text" name="stock" value="{{producto.stock}}"></pre>
-              <pre>Disponibilidad: <input type="text" name="disponibilidad" value="{{producto.descripcion}}"></pre>
-              <pre>Imagen: <input type="text" name="imagen" value="{{producto.imagen}}"></pre>
-          
-              <input type="submit" name="opcion" value="Actualizar">
+                <pre>Id: <input type="text" name="id" value="{{ producto.id }}" readonly></pre>
+                <pre>Proveedor:
+                    <select name="proveedor">
+                        {% for proveedor in proveedores %}
+                            {% if proveedor.id == producto.proveedor.id %}
+                                <option value="{{ proveedor.id }}" selected>{{ proveedor.nombre }}</option>
+                            {% else %}
+                                <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </pre>
+                <pre>Nombre producto: <input type="text" name="nombre_producto" value="{{ producto.nombre_producto }}"></pre>
+                <pre>Descripción: <textarea name="descripcion" rows="4">{{ producto.descripcion }}</textarea></pre>
+                <pre>Precio: <input type="number" name="precio" value="{{ producto.precio }}"></pre>
+                <pre>Stock: <input type="number" name="stock" value="{{ producto.stock }}"></pre>
+                <pre>Disponibilidad:
+                    <select name="disponibilidad">
+                        <option value="True" {% if producto.disponibilidad %} selected {% endif %}>Disponible</option>
+                        <option value="False" {% if not producto.disponibilidad %} selected {% endif %}>No disponible</option>
+                    </select>
+                </pre>
+                <pre>Categoría:
+                    <select name="categoria">
+                        {% for choice in producto.CATEGORIAS %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == producto.categoria %} selected {% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </pre>
+                <pre>Imagen: <input type="file" name="imagen"></pre> <!-- Cambiado a tipo file para subir imágenes -->
   
-          </form> <br><br>
-      {% endif %}
-      <div id="idMensajes">
-          {% if mensaje %}
-          {{mensaje}}
-          {% endif %}
+                <input type="submit" name="opcion" value="Actualizar">
+  
+            </form> <br><br>
+        {% endif %}
+        <div id="idMensajes">
+            {% if mensaje %}
+                {{ mensaje }}
+            {% endif %}
+        </div>
+        <br> <br>
+        <a href="{% url 'crud' %}">Volver</a>
       </div>
-      <br> <br>
-      <a href="{% url 'crud' %}">Volver</a>
     </div>
   </div>
-</div>
   
 
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
