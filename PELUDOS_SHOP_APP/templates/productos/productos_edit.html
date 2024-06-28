@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Crud | Peludos Shop®{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/estiloProductoEdit.css' %}">
+{% endblock %}
+{% block content %}
+
+  <!-- LOGO    BARRA NAVEGACION-->
+  <div class="container-fluid" id="barra_principal">
+    
+    <div class="row">
+      <!-- LOGO -->
+      <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <!-- si voy a registro y aprieto el logo no puedo volver a inicio
+        si lo saco y dejo "" no devuelve a inicio -->
+        <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo peludos shop.png'%}" alt="..." ></a>
+      </div>
+
+      <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <p class="ver-menu">PELUDOS SHOP</p>
+      </div>
+
+        <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+
+          <div class="dropdown">
+            {% comment %} <!-- imagen usuario -->
+            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-expanded="false"><a href="registro"><img src="{% static 'img/usuario.png' %}" width="40px"></a>
+            </button> {% endcomment %}
+            {% if perfil != 'admin' and perfil != 'cliente' %}
+              <a class="btn btn-primary" href="{% url 'iniciosesion' %}">Inicio Sesión</a>
+              <a class="btn btn-primary" href="{% url 'registro' %}">Registrarse</a>
+            {% else %}
+              <!-- Button trigger modal -->
+              <button name="" id="" type="button" class="btn btn-primary" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                {{ request.user.username }}
+              </button>
+              <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Mi cuenta</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <h3>Bienvenido {{ request.user.username }}</h3>
+                      <hr>
+                      <p><b>Correo electrónico:</b> {{ request.user.email }}</p>
+                      {% if user_profile %}
+                        <p><b>RUN :</b> {{ user_profile.run }}</p>
+                        <p><b>Usuario :</b> {{ user_profile.role }}</p>
+
+                      {% else %}
+                        <p>No se ha encontrado el perfil del usuario.</p>
+                      {% endif %}
+                  </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar sesión</a>
+            {% endif %}
+
+
+          </div>
+        </div>
+      <!-- BARRA NAVEGACION -->
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary ">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item item_arriba">
+                  <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}"><img src="{% static 'img/icono2.png'%}" width="30px">INICIO</a>
+                </li>
+                <li class="nav-item item_arriba">
+                  <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">PRODUCTOS</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div> <!--container-fluid-->
+
+  {% if perfil == 'admin' %}
+  <div class="container editar-producto">
+    <div class="row">
+
+        {% if producto %}
+            <h2>Formulario actualizar datos</h2>
+  
+            <form class="modificar" action="{% url 'productosUpdate' %}" method="POST" enctype="multipart/form-data" >
+                {% csrf_token %}
+  
+                <pre>Id: <input type="text" name="id" value="{{ producto.id }}" readonly></pre>
+                <pre>Proveedor:
+                    <select name="proveedor">
+                        {% for proveedor in proveedores %}
+                            {% if proveedor.id == producto.proveedor.id %}
+                                <option value="{{ proveedor.id }}" selected>{{ proveedor.nombre }}</option>
+                            {% else %}
+                                <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </pre>
+                <pre>Nombre producto: <input type="text" name="nombre_producto" value="{{ producto.nombre_producto }}"></pre>
+                <pre>Descripción: <textarea name="descripcion" rows="4">{{ producto.descripcion }}</textarea></pre>
+                <pre>Precio: <input type="number" name="precio" value="{{ producto.precio }}"></pre>
+                <pre>Stock: <input type="number" name="stock" value="{{ producto.stock }}"></pre>
+                <pre>Disponibilidad:
+                    <select name="disponibilidad">
+                        <option value="True" {% if producto.disponibilidad %} selected {% endif %}>Disponible</option>
+                        <option value="False" {% if not producto.disponibilidad %} selected {% endif %}>No disponible</option>
+                    </select>
+                </pre>
+                <pre>Categoría:
+                    <select name="categoria">
+                        {% for choice in producto.CATEGORIAS %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == producto.categoria %} selected {% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </pre>
+                <pre>Imagen: <input class="imagen" type="file" name="imagen"></pre> <!-- Cambiado a tipo file para subir imágenes -->
+  
+                <input class="boton" type="submit" name="opcion" value="Actualizar">
+  
+            </form> <br><br>
+        {% endif %}
+        <div id="idMensajes">
+            {% if mensaje %}
+                {{ mensaje }}
+            {% endif %}
+        </div>
+        <br> <br>
+        <div class="boton-volver">
+          <a class="volver" href="{% url 'crud' %}">Volver</a>
+        </div>
+        
+
+    </div>
+  </div>
+  {% endif %}
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

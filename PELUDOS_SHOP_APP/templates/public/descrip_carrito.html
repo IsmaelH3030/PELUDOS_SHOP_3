@@ -1,3 +1,9 @@
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/estilo-carro.css' %}">
+{% endblock %}
+
 {% if error %}
 <div class="alert alert-danger" role="alert">
     {{ error }}

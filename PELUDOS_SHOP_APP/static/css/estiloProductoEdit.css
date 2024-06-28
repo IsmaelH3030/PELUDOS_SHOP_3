@@ -1,0 +1,98 @@
+/*container*/
+.editar-producto{
+    margin-top: 20px;
+    font-family: "Oswald";
+    display: flex;
+    justify-content: center;
+}
+/*container y h2*/
+.editar-producto h2{
+    font-family: "Oswald";
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+/*form*/
+.modificar{
+    background-color: #8e8aba;
+    box-shadow: 0px 0px 8px 2px #666294;
+    border: 1px solid #666294;
+    border-radius: 20px;
+    text-align: start;
+    padding: 30px;
+    font-size: 18px;
+}
+
+/*formulario y etiqueta pre */
+.modificar pre{
+    font-family: "Oswald";
+    padding: 10px 40px 10px 40px;
+}
+
+/* tamanio de los input*/
+.modificar pre input, textarea, select{
+    width: 100%;
+    display: flex;
+    border-radius: 5px;
+    border: none;
+    padding: 7px;
+}
+
+/*boton actualizar*/
+.editar-producto .modificar .boton{
+    border-radius: 20px;
+    background-color: #8e8aba;
+    border-color: #595b76;
+    border: 1px solid #595b76;
+    padding: 7px 20px 7px 23px;
+    box-shadow: 0px 0px 10px 3px #666294;
+    color: white;
+    margin-top: 20px;
+    transition: ease-in-out .3s;
+}
+/*boton actualizar*/
+.editar-producto .modificar .boton:hover{
+    background-color: #595b76;
+    transition: ease-in-out .3s;
+}
+
+/*boton volver*/
+.volver {
+    border-radius: 20px;
+    background-color: #8e8aba;
+    border-color: #595b76;
+    border: 1px solid #595b76;
+    box-shadow: 0px 0px 10px 1px #666294;
+    width: 30%;
+    text-decoration: none;
+    color: azure;
+    display: flex;
+    justify-content: center;
+    padding: 7px 20px 7px 23px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    transition: ease-in-out .3s;
+}
+/*boton volver*/
+.volver:hover {
+    background-color: #595b76;
+    transition: ease-in-out .3s;
+}
+
+  /* .color1 {color: #060610;}
+   .color2 {color: #292e40;}
+   .color3 {color: #595b76;}
+   .color5 {color: #666294;}
+   .color4 {color: #8e8aba;}
+   .color5 {color: #cdbae5;} 
+   .color5 {color: #ebdaff;} */
+
+
+   /* .apartado-agregar-boton button:hover {
+    background-color: #595b76;
+    transition: ease-in-out .3s;
+  } */

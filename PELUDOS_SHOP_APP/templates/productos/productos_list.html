@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %} 
+
+{% endblock %}
+
+{% block title%}Peludos Shop®{% endblock %}
+
+{% block content %} 
+<!-- LOGO     BARRA DE BUSQUEDA      BARRA NAVEGACION-->
+<div class="container-fluid" id="barra_principal">
+    <div class="row">
+      <!-- LOGO -->
+      <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo peludos shop.png'%}" alt="..." ></a>
+      </div>
+
+      <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <p class="ver-menu">PELUDOS SHOP</p>
+      </div>
+
+        <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+
+          <div class="dropdown">
+            {% if perfil != 'admin' and perfil != 'cliente' %}
+              <a class="btn btn-primary" href="{% url 'iniciosesion' %}">Inicio Sesión</a>
+              <a class="btn btn-primary" href="{% url 'registro' %}">Registrarse</a>
+            {% else %}
+              <!-- Button trigger modal -->
+                <button name="" id="" type="button" class="btn btn-primary" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  {{ request.user.username }}
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Mi cuenta</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <h3>Bienvenido {{ request.user.username }}</h3>
+                        <hr>
+                        <p><b>Correo electrónico:</b> {{ request.user.email }}</p>
+                        {% if user_profile %}
+                          <p><b>RUN :</b> {{ user_profile.run }}</p>
+                          <p><b>Usuario :</b> {{ user_profile.role }}</p>
+                        {% else %}
+                          <p>No se ha encontrado el perfil del usuario.</p>
+                        {% endif %}
+                    </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar sesión</a>
+            {% endif %}
+          </div>
+        </div>
+      <!-- BARRA NAVEGACION -->
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary ">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item item_arriba">
+                  <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">PRODUCTOS</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div> <!--container-fluid-->
+  <br>
+
+
+  
+  <!--EDITAR LOS PRODUCTOS --> 
+{% if perfil == 'admin' %}
+<div class="container">
+  <div class="row">
+    
+        <div class="apartado-agregar-titulo  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <h1>Editar Datos de los Productos</h1>
+        </div>
+        
+            <diV class="apartado-agregar-tabla  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div id="idMensajes">
+                    {% if mensaje %}
+                        {{ mensaje }}
+                    {% endif %}
+                </div>
+            <div class="table-responsive">
+
+              <table class="apartado-aliminar-editar">
+                {% if productos %}
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Proveedor</th>
+                            <th>Nombre producto</th>
+                            <th>Descripcion</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Disponibilidad</th>
+                            <th>Imagen</th>
+                            <th>Eliminar</th>
+                            <th>Modificar</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% for x in productos %}
+                        <tr>
+                            <td>{{ x.id }}</td>
+                            <td>{{ x.proveedor }}</td>
+                            <td>{{ x.nombre_producto }}</td>
+                            <td>{{ x.descripcion }}</td>
+                            <td>{{ x.precio }}</td>
+                            <td>{{ x.stock }}</td>
+                            <td>{{ x.disponibilidad }}</td>
+                            <td>{{ x.imagen }}</td>
+                            
+                            <td><a id="eliminar"  href="{% url 'productos_del' pk=x.id %}">Eliminar</a></td>
+                            <td><a id="modificar" href="{% url 'productos_findEdit' pk=x.id %}">Modificar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tr>
+                        <td colspan="10">No hay productos disponibles.</td>
+                    </tr>
+                {% endif %}
+            </table>
+          </div>
+                
+        </diV>
+
+            <div class="apartado-agregar-boton  col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+              <button type="button"><a href="{% url 'productosAdd' %}">Agregar</a></button>
+              </div>
+        </div>  
+      </div>
+    {% endif %}
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $("#idMensajes").delay(2000).fadeOut("slow");
+    });
+</script>
+<br>
+<br><br>
+{% endblock %}
+
+
+

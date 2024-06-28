@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static '/css/estilo.css' %}">
-    <link rel="website icon" type="png" href="{% static 'img/Logo.png' %}" >
+    <link rel="website icon" type="png" href="{% static 'img/Logo peludos shop.png'%}" >
 </head>
 
 <body>
@@ -29,14 +29,16 @@
       <div class="footer">
         <div class=" container">
           <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
-              <img src="{% static 'img/Logo.png'%}" width="150px" alt="">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
+              <img src="{% static 'img/Logo peludos shop.png'%}" width="150px" alt="">
             </div>
             <div class="col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
               <h5>AYUDA</h5>
               <a href="{% url 'preguntasFrecuentes'%}">Preguntas frecuentes</a>
               <a href="#">Contacto</a>
               <a href="{% url 'nosotros'%}">Nosotros</a>
+              <a href="{% url 'suscripcion'%}">Suscribirse</a>
+
             </div>
             <div class="col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
               <h5>LEGAL</h5>
@@ -46,9 +48,16 @@
 
             <div class="col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
               <h5>CONVENIO</h5>
-              <a href="">Convenio empresas </a>
-            </div>
+              <a href="">Fundacion Esperanza Animal</a>
 
+            </div>
+            {% if perfil == 'admin' %}
+            <div class="col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
+              <h5>ADMINISTRACION</h5>
+              <a href="{% url 'crud'%}">Crud</a>
+            </div>
+            {% endif %}
+            
 
         </div>
         <div class="co-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
@@ -72,15 +81,15 @@
       </div>
             <!--   D RESERVADOS   -->
         <div class="c-reservados">
-          &copy; 2024 Almuerzo Santiago. Todos los derechos reservados
+          &copy; 2024 Peludos Shop. Todos los derechos reservados
             <!--http://www.ascii.cl/htmlcodes.htm-->
         </div>
     </footer> 
     {% block scripts %} <!-- Scripts de la página -->
+    
     {% endblock %} <!-- Fin del bloque de scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="{% static 'Js/carrito.js'%}"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 </html>

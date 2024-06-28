@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static '/css/estilo-carro.css' %}">
 {% endblock %}
 
-{% block title%}Carrito{% endblock %}
+{% block title%}CARRITO{% endblock %}
 
 {% block content %} 
     <!-- LOGO     BARRA DE BUSQUEDA      BARRA NAVEGACION-->
@@ -16,11 +16,11 @@
           <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
             <!-- si voy a registro y aprieto el logo no puedo volver a inicio
             si lo saco y dejo "" no devuelve a inicio -->
-            <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo.png' %}" alt="..." ></a>
+            <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo peludos shop.png'%}" alt="..." ></a>
           </div>
     
           <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <p class="ver-menu">SANTIAGO ALIMENTOS</p>
+            <p class="ver-menu">PELUDOS SHOP</p>
           </div>
     
             <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
@@ -39,7 +39,7 @@
                       <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}"><img src="{% static 'img/icono2.png'%}" width="30px">INICIO</a>
                     </li>
                     <li class="nav-item item_arriba">
-                      <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">MENÚ</a>
+                      <a class="nav-link active" aria-current="page" href="{% url 'menu' %}"><img src="{% static 'img/icono2.png'%}" width="30px">PRODUCTOS</a>
                     </li>
                   </ul>
                 </div>
