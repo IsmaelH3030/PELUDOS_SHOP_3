@@ -5,204 +5,202 @@
 {% block title %}Menu | Alimentos Santiago®{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'img/Logo peludos shop.png'%}">
+
 {% endblock %}
 {% block content %}
 
-  <!-- LOGO    BARRA NAVEGACION-->
-  <div class="container-fluid" id="barra_principal">
-    
-    <div class="row">
-      <!-- LOGO -->
-      <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-        <!-- si voy a registro y aprieto el logo no puedo volver a inicio
-        si lo saco y dejo "" no devuelve a inicio -->
-        <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo peludos shop.png'%}" alt="..." ></a>
-      </div>
+<!-- LOGO    BARRA NAVEGACION-->
+<div class="container-fluid" id="barra_principal">
+  
+  <div class="row">
+    <!-- LOGO -->
+    <div class="container col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
 
-      <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-        <p class="ver-menu">PELUDOS SHOP</p>
-      </div>
+      <a href="{% url 'inicio'%}"><img  class="logo" src="{% static 'img/Logo peludos shop.png'%}" alt="..." ></a>
+    </div>
 
-        <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+    <div class="ver-menu col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+      <p class="ver-menu">PELUDOS SHOP</p>
+    </div>
 
-          <div class="dropdown">
-            {% comment %} <!-- imagen usuario -->
-            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-expanded="false"><a href="registro"><img src="{% static 'img/usuario.png' %}" width="40px"></a>
-            </button> {% endcomment %}
-            {% if perfil != 'admin' and perfil != 'cliente' %}
-              <a class="btn btn-primary" href="{% url 'iniciosesion' %}">Inicio Sesión</a>
-              <a class="btn btn-primary" href="{% url 'registro' %}">Registrarse</a>
-            {% else %}
-              <!-- Button trigger modal -->
-              <button name="" id="" type="button" class="btn btn-primary" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                {{ request.user.username }}
-              </button>
-              <!-- Modal -->
-              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Mi cuenta</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <h3>Bienvenido {{ request.user.username }}</h3>
-                      <hr>
-                      <p><b>Correo electrónico:</b> {{ request.user.email }}</p>
-                      {% if user_profile %}
-                        <p><b>RUN :</b> {{ user_profile.run }}</p>
-                        <p><b>Usuario :</b> {{ user_profile.role }}</p>
+    <div class="usuario  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
 
-                      {% else %}
-                        <p>No se ha encontrado el perfil del usuario.</p>
-                      {% endif %}
-                  </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                  </div>
+      <div class="dropdown">
+        {% comment %} <!-- imagen usuario -->
+        <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-expanded="false"><a href="registro"><img src="{% static 'img/usuario.png' %}" width="40px"></a>
+        </button> {% endcomment %}
+        {% if perfil != 'admin' and perfil != 'cliente' %}
+          <a class="btn btn-primary" href="{% url 'iniciosesion' %}">Inicio Sesión</a>
+          <a class="btn btn-primary" href="{% url 'registro' %}">Registrarse</a>
+        {% else %}
+          <!-- Button trigger modal -->
+          <button name="" id="" type="button" class="btn btn-primary" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            {{ request.user.username }}
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Mi cuenta</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <h3>Bienvenido {{ request.user.username }}</h3>
+                  <hr>
+                  <p><b>Correo electrónico:</b> {{ request.user.email }}</p>
+                  {% if user_profile %}
+                    <p><b>RUN :</b> {{ user_profile.run }}</p>
+                    <p><b>Usuario :</b> {{ user_profile.role }}</p>
+
+                  {% else %}
+                    <p>No se ha encontrado el perfil del usuario.</p>
+                  {% endif %}
+              </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
               </div>
-              <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar sesión</a>
-            {% endif %}
-
-
-          </div>
-        </div>
-      <!-- BARRA NAVEGACION -->
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary ">
-          <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-              <ul class="navbar-nav">
-                <li class="nav-item item_arriba">
-                  <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}"><img src="{% static 'img/icono2.png'%}" width="30px">INICIO</a>
-                </li>
-                <li class="nav-item item_arriba">
-                  <a class="nav-link active" aria-current="page" href="#PRODUCTOS"><img src="{% static 'img/icono2.png'%}" width="30px">PRODUCTOS</a>
-                </li>
-              </ul>
             </div>
           </div>
-        </nav>
+          <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar sesión</a>
+        {% endif %}
+
+
       </div>
     </div>
-  </div> <!--container-fluid-->
-
-
-      <!--PARATADO IMAGEN TOP-->
-      <div class="container imagen-top" id="imagen-top">
-        <div class=" col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-          <img src="{% static 'img/imagen_larga.jpg' %}" width="100%"  >
-           <hr>
-        </div>
-      </div>
-
-      <br>
-      <br>
-
-       <!--PARATADO RECTANGULO DEL CARRITO-->
-      <div class="row " id="rectangulo">
-        <div class="col-1"></div>
-        <div class="detalle col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
-          <div class="rectangulo-derecho" >
-              <h3>Detalles</h3>
-                {% include 'public/descrip_carrito.html' %}
+    <!-- BARRA NAVEGACION -->
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary ">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item item_arriba">
+                <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}"><img src="{% static 'img/icono2.png'%}" width="30px">INICIO</a>
+              </li>
+              <li class="nav-item item_arriba">
+                <a class="nav-link active" aria-current="page" href="#GATOS"><img src="{% static 'img/gatito.png'%}" width="30px">ALIMENTOS GATOS</a>
+              </li>
+              <li class="nav-item item_arriba">
+                <a class="nav-link active" aria-current="page" href="#PERROS"><img src="{% static 'img/perrito.png'%}" width="30px">ALIMENTOS PERROS</a>
+              </li>
+              <li class="nav-item item_arriba">
+                <a class="nav-link active" aria-current="page" href="#ACCESORIOS"><img src="{% static 'img/patita.png'%}" width="30px">ACCESORIOS</a>
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="col-1"></div>
-      </div>
-
-      <br>
-      <br>
-
-
-      <div class="col-12" id="PRODUCTOS">
-        <br>
-        <h3>ALIMENTOS GATOS</h3>
-        <div class="container cont-cartas">
-            {% for producto in productos_gatos %}
-            <div class="card" style="width: 18rem;">
-                {% if producto.imagen %}
-                    <img src="{{ producto.imagen.url }}" class="card-img-top producto-imagen" alt="Imagen del producto">
-                {% else %}
-                    <span>No hay foto disponible</span>
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-                    <hr>
-                    <p class="card-text">{{ producto.descripcion }}</p>
-                    <p class="card-text">$ {{ producto.precio }}</p>
-                    <center><a href="{% url 'add' producto.id %}" class="btn btn-custom-purple" aria-current="page">Agregar al carrito</a></center>
-                </div>
-            </div>
-            <br>
-            {% endfor %}
-        </div>
+      </nav>
     </div>
-
-
-
-
-   <!-- ALIMENTOS PERROS -->
-<div class="col-12">
-  <br>
-  <h3>ALIMENTOS PERROS</h3>
-  <div class="container cont-cartas">
-      {% for producto in productos_perros %}
-      <div class="card" style="width: 18rem;">
-          {% if producto.imagen %}
-              <img src="{{ producto.imagen.url }}" class="card-img-top producto-imagen" alt="Imagen del producto">
-          {% else %}
-              <span>No hay foto disponible</span>
-          {% endif %}
-          <div class="card-body">
-              <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-              <hr>
-              <p class="card-text">{{ producto.descripcion }}</p>
-              <p class="card-text">$ {{ producto.precio }}</p>
-              <center><a href="{% url 'add' producto.id %}" class="btn btn-custom-purple" aria-current="page">Agregar al carrito</a></center>
-          </div>
-      </div>
-      <br>
-      {% endfor %}
   </div>
+</div> <!--container-fluid-->
+
+
+<!--PARATADO IMAGEN TOP-->
+<div class="container imagen-top" id="imagen-top">
+  <div class=" col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <img src="{% static 'img/imagen_larga.jpg' %}" width="100%"  >
+      <hr>
+  </div>
+</div>
+
+    <!--PARATADO RECTANGULO DEL CARRITO-->
+<div class="container">
+  <div class="row " id="rectangulo">
+    <div class="detalle col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+      <div class="rectangulo-derecho" >
+          <h3>Detalles</h3>
+            {% include 'public/descrip_carrito.html' %}
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="col-12" id="GATOS">
+  <br>
+  <h3>ALIMENTOS GATOS</h3>
+  <div class="container cont-cartas">
+    {% for producto in productos_gatos %}
+    <div class="card" style="width: 18rem;">
+        {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" class="card-img-top producto-imagen" alt="Imagen del producto">
+        {% else %}
+            <span>No hay foto disponible</span>
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
+            <hr>
+            <p class="card-text">{{ producto.descripcion }}</p>
+            <p class="card-text">$ {{ producto.precio }}</p>
+            <center><a href="{% url 'add' producto.id %}" class="btn btn-custom-purple" aria-current="page">Agregar al carrito</a></center>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+  </div>
+</div>
+
+  <!-- ALIMENTOS PERROS -->
+<div class="col-12" id="PERROS">
+<br>
+<h3>ALIMENTOS PERROS</h3>
+<div class="container cont-cartas">
+    {% for producto in productos_perros %}
+    <div class="card" style="width: 18rem;">
+        {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" class="card-img-top producto-imagen" alt="Imagen del producto">
+        {% else %}
+            <span>No hay foto disponible</span>
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
+            <hr>
+            <p class="card-text">{{ producto.descripcion }}</p>
+            <p class="card-text">$ {{ producto.precio }}</p>
+            <center><a href="{% url 'add' producto.id %}" class="btn btn-custom-purple" aria-current="page">Agregar al carrito</a></center>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+</div>
 </div>
 
 <!-- ALIMENTOS PERROS -->
-<div class="col-12">
-  <br>
-  <h3>ACCESORIOS</h3>
-  <div class="container cont-cartas">
-      {% for producto in accesorios  %}
-      <div class="card" style="width: 18rem;">
-          {% if producto.imagen %}
-              <img src="{{ producto.imagen.url }}" class="card-img-top producto-imagen" alt="Imagen del producto">
-          {% else %}
-              <span>No hay foto disponible</span>
-          {% endif %}
-          <div class="card-body">
-              <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-              <hr>
-              <p class="card-text">{{ producto.descripcion }}</p>
-              <p class="card-text">$ {{ producto.precio }}</p>
-              <center><a href="{% url 'add' producto.id %}" class="btn btn-custom-purple" aria-current="page">Agregar al carrito</a></center>
+<div class="col-12" id="ACCESORIOS">
+<br>
+<h3>ACCESORIOS</h3>
+<div class="container cont-cartas">
+    {% for producto in accesorios  %}
+    <div class="card" style="width: 18rem;">
+        {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" class="card-img-top producto-imagen" alt="Imagen del producto">
+        {% else %}
+            <span>No hay foto disponible</span>
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
+            <hr>
+            <p class="card-text">{{ producto.descripcion }}</p>
+            <p class="card-text">$ {{ producto.precio }}</p>
+            <center><a href="{% url 'add' producto.id %}" class="btn btn-custom-purple" aria-current="page">Agregar al carrito</a></center>
           </div>
-      </div>
-      <br>
-      {% endfor %}
-  </div>
+    </div>
+    
+    {% endfor %}
 </div>
-
+</div>
+<br>
 
 
 {% endblock %}
 
-  {% comment %}
-  
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>    
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> {% endcomment %}
+{% comment %}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> {% endcomment %}

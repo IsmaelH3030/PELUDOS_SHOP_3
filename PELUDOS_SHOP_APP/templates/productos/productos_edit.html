@@ -2,10 +2,10 @@
 
 {% load static %}
 
-{% block title %}Menu | Alimentos Santiago®{% endblock %}
+{% block title %}Crud | Peludos Shop®{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'img/Logo peludos shop.png'%}">
+    <link rel="stylesheet" href="{% static '/css/estiloProductoEdit.css' %}">
 {% endblock %}
 {% block content %}
 
@@ -93,13 +93,14 @@
     </div>
   </div> <!--container-fluid-->
 
-  <div class="container">
+  {% if perfil == 'admin' %}
+  <div class="container editar-producto">
     <div class="row">
-      <div style="text-align: center;">
+
         {% if producto %}
             <h2>Formulario actualizar datos</h2>
   
-            <form action="{% url 'productosUpdate' %}" method="POST" enctype="multipart/form-data">
+            <form class="modificar" action="{% url 'productosUpdate' %}" method="POST" enctype="multipart/form-data" >
                 {% csrf_token %}
   
                 <pre>Id: <input type="text" name="id" value="{{ producto.id }}" readonly></pre>
@@ -131,9 +132,9 @@
                         {% endfor %}
                     </select>
                 </pre>
-                <pre>Imagen: <input type="file" name="imagen"></pre> <!-- Cambiado a tipo file para subir imágenes -->
+                <pre>Imagen: <input class="imagen" type="file" name="imagen"></pre> <!-- Cambiado a tipo file para subir imágenes -->
   
-                <input type="submit" name="opcion" value="Actualizar">
+                <input class="boton" type="submit" name="opcion" value="Actualizar">
   
             </form> <br><br>
         {% endif %}
@@ -143,11 +144,14 @@
             {% endif %}
         </div>
         <br> <br>
-        <a href="{% url 'crud' %}">Volver</a>
-      </div>
+        <div class="boton-volver">
+          <a class="volver" href="{% url 'crud' %}">Volver</a>
+        </div>
+        
+
     </div>
   </div>
-  
+  {% endif %}
 
 
 {% endblock %}

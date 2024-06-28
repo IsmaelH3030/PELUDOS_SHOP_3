@@ -14,28 +14,26 @@ from django.db import transaction
 # Create your views here.
 
 def suscripcion(request):
-    return render(request, 'suscripcion.html')
+    perfil = request.session.get('perfil')
+    user_profile = None
+
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            user_profile = None
+
+    context = {
+        'perfil': perfil,
+        'user_profile': user_profile,
+    }
+    return render(request, 'suscripcion.html',context )
 
 
 
 def inicio(request):
-    # Para que se muestren los platos que la empresa requeria de platos
-#    user = request.user
+    
     perfil = request.session.get('perfil')
-#     if user.is_authenticated:
-#         try:
-#             user_profile = UserProfile.objects.get(user=user)
-#             empresa = user_profile.empresa.first()  # Obtener la primera empresa asociada al perfil
-#         except UserProfile.DoesNotExist:
-#             user_profile = None
-#             empresa = None
-
-#         if empresa:
-#             platos = empresa.platos_disponibles.filter(disponibilidad=True)
-#         else:
-#             platos = PlatoProveedor.objects.filter(disponibilidad=True)
-#     else:
-#         platos = PlatoProveedor.objects.filter(disponibilidad=True)
 
     platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
 
@@ -351,26 +349,9 @@ def china(request):
     return render(request, 'china.html')
 
 def nosotros(request):
-               # Para que se muestren los platos que la empresa requeria de platos
-#    user = request.user
     perfil = request.session.get('perfil')
-#     if user.is_authenticated:
-#         try:
-#             user_profile = UserProfile.objects.get(user=user)
-#             empresa = user_profile.empresa.first()  # Obtener la primera empresa asociada al perfil
-#         except UserProfile.DoesNotExist:
-#             user_profile = None
-#             empresa = None
 
-#         if empresa:
-#             platos = empresa.platos_disponibles.filter(disponibilidad=True)
-#         else:
-#             platos = PlatoProveedor.objects.filter(disponibilidad=True)
-#     else:
-#         platos = PlatoProveedor.objects.filter(disponibilidad=True)
-
-    platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
-
+    
     user_profile = None
 
     if request.user.is_authenticated:
@@ -390,24 +371,8 @@ def peru(request):
     return render(request, 'peru.html')
 
 def preguntasFrecuentes(request):
-           # Para que se muestren los platos que la empresa requeria de platos
-#    user = request.user
+         
     perfil = request.session.get('perfil')
-#     if user.is_authenticated:
-#         try:
-#             user_profile = UserProfile.objects.get(user=user)
-#             empresa = user_profile.empresa.first()  # Obtener la primera empresa asociada al perfil
-#         except UserProfile.DoesNotExist:
-#             user_profile = None
-#             empresa = None
-
-#         if empresa:
-#             platos = empresa.platos_disponibles.filter(disponibilidad=True)
-#         else:
-#             platos = PlatoProveedor.objects.filter(disponibilidad=True)
-#     else:
-#         platos = PlatoProveedor.objects.filter(disponibilidad=True)
-
     platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
 
     user_profile = None
@@ -427,17 +392,46 @@ def preguntasFrecuentes(request):
 
 
 def crud(request):
+    perfil = request.session.get('perfil')
+    platos = ProductoProveedor.objects.filter(stock__gt=0, disponibilidad=True)
+    user_profile = None
+
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            user_profile = None
+
     productos = ProductoProveedor.objects.all()
-    context = {'productos': productos}
+    context = {
+        'productos': productos,
+        'perfil': perfil,
+        'platos': platos,
+        'user_profile': user_profile,
+    }
     return render(request, 'productos/productos_list.html', context)
 
+
 def productosAdd(request):
+    perfil = request.session.get('perfil')
+    platos = ProductoProveedor.objects.filter(stock__gt=0, disponibilidad=True)
+    user_profile = None
+
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            user_profile = None
+
     if request.method != "POST":
         proveedores = Proveedor.objects.all()
         categorias = ProductoProveedor.CATEGORIAS  # Obtén las opciones de categoría desde el modelo
         context = {
             'proveedores': proveedores,
-            'categorias': categorias  # Pasa las categorías al contexto
+            'categorias': categorias,  # Pasa las categorías al contexto
+            'perfil': perfil,
+            'platos': platos,
+            'user_profile': user_profile,
         }
         return render(request, 'productos/productos_add.html', context)
     else:
@@ -466,10 +460,26 @@ def productosAdd(request):
         )
 
         # Preparar el contexto con un mensaje de éxito
-        context = {'mensaje': 'Datos grabados'}
+        context = {
+            'mensaje': 'Datos grabados',
+            'perfil': perfil,
+            'platos': platos,
+            'user_profile': user_profile,
+        }
         return render(request, 'productos/productos_add.html', context)
 
+
 def productos_del(request, pk):
+    perfil = request.session.get('perfil')
+    platos = ProductoProveedor.objects.filter(stock__gt=0, disponibilidad=True)
+    user_profile = None
+
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            user_profile = None
+
     context = {}
     try:
         producto = ProductoProveedor.objects.get(id=pk)
@@ -479,10 +489,27 @@ def productos_del(request, pk):
         mensaje = "Error, id no existe."
 
     productos = ProductoProveedor.objects.all()
-    context = {'productos': productos, 'mensaje': mensaje}
+    context = {
+        'productos': productos,
+        'mensaje': mensaje,
+        'perfil': perfil,
+        'platos': platos,
+        'user_profile': user_profile,
+    }
     return render(request, 'productos/productos_list.html', context)
 
+
 def productos_findEdit(request, pk):
+    perfil = request.session.get('perfil')
+    platos = ProductoProveedor.objects.filter(stock__gt=0, disponibilidad=True)
+    user_profile = None
+
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            user_profile = None
+
     try:
         producto = ProductoProveedor.objects.get(id=pk)
         proveedores = Proveedor.objects.all()
@@ -491,15 +518,33 @@ def productos_findEdit(request, pk):
         context = {
             'producto': producto,
             'proveedores': proveedores,
-            'categorias': categorias  # Pasar las categorías al contexto
+            'categorias': categorias,  # Pasar las categorías al contexto
+            'perfil': perfil,
+            'platos': platos,
+            'user_profile': user_profile,
         }
         return render(request, 'productos/productos_edit.html', context)
     except ProductoProveedor.DoesNotExist:
-        context = {'mensaje': "Error, id no existe."}
+        context = {
+            'mensaje': "Error, id no existe.",
+            'perfil': perfil,
+            'platos': platos,
+            'user_profile': user_profile,
+        }
         return render(request, 'productos/productos_list.html', context)
 
 
 def productosUpdate(request):
+    perfil = request.session.get('perfil')
+    platos = ProductoProveedor.objects.filter(stock__gt=0, disponibilidad=True)
+    user_profile = None
+
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            user_profile = None
+
     if request.method == "POST":
         id_producto = request.POST.get("id")
         proveedor_id = request.POST.get("proveedor")
@@ -528,13 +573,24 @@ def productosUpdate(request):
         producto.save()
 
         proveedores = Proveedor.objects.all()
-        context = {'mensaje': "Datos actualizados", 'proveedores': proveedores, 'producto': producto}
+        context = {
+            'mensaje': "Datos actualizados",
+            'proveedores': proveedores,
+            'producto': producto,
+            'perfil': perfil,
+            'platos': platos,
+            'user_profile': user_profile,
+        }
         return render(request, 'productos/productos_edit.html', context)
     else:
         productos = ProductoProveedor.objects.all()
-        context = {'productos': productos}
+        context = {
+            'productos': productos,
+            'perfil': perfil,
+            'platos': platos,
+            'user_profile': user_profile,
+        }
         return render(request, 'productos/productos_list.html', context)
-
 
 def productos_categoria(request):
     productos_gatos = ProductoProveedor.objects.filter(categoria='comida_gatos')
