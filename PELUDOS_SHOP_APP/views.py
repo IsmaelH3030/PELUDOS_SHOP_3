@@ -82,7 +82,7 @@ def registro(request):
 
         UserProfile.objects.create(user=user, run=run, role=role)
         return redirect('inicio')
-        # Resto de tu lógica aquí (redireccionar, etc.)
+        
 
     return render(request, 'auth/registro.html')
 
@@ -116,9 +116,6 @@ def detalle_plato(request, id):
         'plato': plato,
     }
     return render(request, 'public/detalle_plato.html', context)
-
-# def carrito(request):
-#     return render(request, 'public/carrito.html')
 
 
 def carro(request):
