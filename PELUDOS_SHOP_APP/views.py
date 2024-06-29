@@ -350,7 +350,7 @@ def china(request):
 
 def nosotros(request):
     perfil = request.session.get('perfil')
-
+    platos = ProductoProveedor.objects.filter(stock__gt=0,disponibilidad=True)
     
     user_profile = None
 
