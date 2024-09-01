@@ -31,39 +31,6 @@
                 <a name="" id="" class="btn btn-primary" href="#" role="button">{{ request.user.username }}</a>
                 <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar sesión</a>
                 {% endif %}
-                <!-- imagen carrito -->
-                <!-- <a href="#">
-                    <button id="carrito1" type="button" class="btn" onclick="abrirCarrito()">
-                        <img src="{% static 'img/carrito.png'%}" width="40px">
-                        <span id="cantidadCarrito" class="badge bg-danger rounded-pill">0</span>
-                    </button>
-                </a>
-
-                <div class="modal fade" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="carritoModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="carritoModalLabel">Carrito de Compras</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div id="carrito-contenido"></div>
-                                            <div id="carrito-total"></div>
-                                            <hr class="border border-danger border-2 opacity-50">
-                                            <button type="button" class="btn btn-secondary btn-pagar"
-                                                data-bs-dismiss="modal">PAGAR</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
         <!-- BARRA NAVEGACION -->
@@ -105,20 +72,23 @@
             <div class="mb-3">
                 <label for="InputUsuario" class="form-label">Usuario</label>
                 <input type="text" class="form-control input" id="InputUsuario" name="InputUsuario"
-                    aria-describedby="emailHelp" placeholder="Ejemplo_123">
+                    placeholder="Ejemplo_123">
             </div>
             <div class="mb-3">
                 <label for="InputPassword1" class="form-label">Contraseña</label>
                 <input type="password" class="form-control input" id="InputPassword1" name="InputPassword1"
                     placeholder="***************">
             </div>
+
+            <!-- Mostrar mensajes de error o éxito -->
             {% if messages %}
-            {% for message in messages %}
             <div class="alert alert-warning" role="alert">
+                {% for message in messages %}
                 {{ message }}
+                {% endfor %}
             </div>
-            {% endfor %}
             {% endif %}
+            
             <center><button type="submit" class="btn btn-light">Enviar</button></center>
         </form>
     </div>

@@ -54,6 +54,7 @@ def inicio(request):
     return render(request, 'public/inicio.html', context)
 
 def registro(request):
+    error_message = None
     if request.method == 'POST':
         us = request.POST.get('InputUsuario')
         correo = request.POST.get('InputEmail1')
@@ -61,45 +62,56 @@ def registro(request):
         contrasenia = request.POST.get('InputPassword1')
         role = 'cliente'
 
+        # Verificar si el usuario ya existe
         if User.objects.filter(username=us).exists():
             messages.error(request, 'El usuario ya está en uso')
             return render(request, 'auth/registro.html')
 
+        # Verificar si el correo ya está en uso
         if User.objects.filter(email=correo).exists():
             messages.error(request, 'El correo ya está en uso')
             return render(request, 'auth/registro.html')
 
-        if User.objects.filter(id=run).exists():
+        # Verificar si el RUT ya está en uso
+        if UserProfile.objects.filter(run=run).exists():
             messages.error(request, 'El rut ya está en uso')
             return render(request, 'auth/registro.html')
 
-        # Verifica que 'us' no esté vacío o nulo antes de crear el usuario
+        # Verificar que el nombre de usuario no esté vacío
         if not us:
             messages.error(request, 'El nombre de usuario es obligatorio')
             return render(request, 'auth/registro.html')
 
+        # Validación de longitud del RUT (mínimo 9 caracteres)
+        if len(run) < 9:
+            messages.error(request, 'El RUT debe tener al menos 9 caracteres')
+            return render(request, 'auth/registro.html')
+
+        # Crear el usuario si todo está correcto
         user = User.objects.create_user(username=us, email=correo, password=contrasenia)
 
+        # Crear el perfil del usuario asociado con su RUT y rol
         UserProfile.objects.create(user=user, run=run, role=role)
-        return redirect('inicio')
-        
 
-    return render(request, 'auth/registro.html')
+        # Redirigir a la página de inicio después de completar el registro
+        return redirect('inicio')
+
+    # Renderizar el formulario de registro si la solicitud no es POST
+    return render(request, 'auth/registro.html' ,{'error_message': error_message})
 
 def iniciosesion(request):
-    error_message = None  # Variable para almacenar el mensaje de error
     if request.method == 'POST':
-        usuario = request.POST['InputUsuario']  # Se obtiene el usuario
-        contrasenia = request.POST['InputPassword1']  # Se obtiene la contraseña
-        user = authenticate(request, username=usuario, password=contrasenia)  # Autenticar usuario
+        usuario = request.POST['InputUsuario']
+        contrasenia = request.POST['InputPassword1']
+        user = authenticate(request, username=usuario, password=contrasenia)
         if user is not None:
-            profile = UserProfile.objects.get(user=user)  # Obtener el perfil del usuario
-            request.session['perfil'] = profile.role  # Guardar el rol en la sesión
-            auth_login(request, user)  # Iniciar sesión
-            return redirect('inicio')  # Redirigir a la página de inicio
+            profile = UserProfile.objects.get(user=user)
+            request.session['perfil'] = profile.role
+            auth_login(request, user)
+            return redirect('inicio')
         else:
-            error_message = 'Usuario o contraseña incorrectos, intente de nuevo.'  # Mensaje de error
-    return render(request, 'auth/iniciosesion.html', {'error_message': error_message})  # Renderizar la página con mensaje de error
+            messages.error(request, 'Usuario o contraseña incorrectos, intente de nuevo.')  # Usar sistema de mensajes
+    return render(request, 'auth/iniciosesion.html')
 
 @login_required
 @role_required('admin', 'cliente')

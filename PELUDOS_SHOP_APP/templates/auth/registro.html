@@ -62,6 +62,9 @@
       </div>
     </div>
   </div> <!--container-fluid-->
+
+  <!-- Bloque de mensajes -->
+  
   
   <div class="container registro">
     <div class="separador"></div>
@@ -95,6 +98,18 @@
           <label class="form-check-label" for="Check1">Acepta los términos y condiciones</label>
         </div>
         <center><button type="submit" class="btn btn-light" >Enviar</button></center>
+        
+        <div class="container mt-3">
+          {% if messages %}
+            <div class="alert alert-dismissible fade show">
+              {% for message in messages %}
+                <div class="alert alert-warning" role="alert">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
       </form>
     </div>
   </div>
