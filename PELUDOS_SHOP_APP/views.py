@@ -83,8 +83,8 @@ def registro(request):
             return render(request, 'auth/registro.html')
 
         # Validación de longitud del RUT (mínimo 9 caracteres)
-        if len(run) < 9:
-            messages.error(request, 'El RUT debe tener al menos 9 caracteres')
+        if len(run) < 9 or len(run) > 10:
+            messages.error(request, 'El RUT debe tener entre 9 a 10 caracteres')
             return render(request, 'auth/registro.html')
 
         # Crear el usuario si todo está correcto
